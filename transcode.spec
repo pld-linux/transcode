@@ -1,7 +1,7 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.5.3
+Version:	0.6.0pre2
 Release:	1
 License:	GPL
 Group:		Applications
@@ -10,8 +10,10 @@ Group(es):	Aplicaciones
 Group(pl):	Aplikacje
 Group(pt):	Aplicações
 Group(pt_BR):	Aplicações
-Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
+#Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
+Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tgz
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
+BuildRequires:	ImageMagick-devel >= 5.4.0
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	avifile-devel >= 0.6.0-0.20011220admin.1
 BuildRequires:	lame-libs-devel
@@ -19,8 +21,8 @@ BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libmpeg3-devel
 BuildRequires:	openquicktime-devel
+BuildRequires:	quicktime4linux-devel
 BuildConflicts:	ac3dec-devel
-BuildConflicts:	quicktime4linux-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,10 +35,11 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %setup  -q
 
 %build
-CXXFLAGS="$CXXFLAGS -fpermissive"
+#CXXFLAGS="$CXXFLAGS -fpermissive"
 %configure \
 	--with-dv-includes=/usr/X11R6 \
-	--with-dv-libs=/usr/X11R6
+	--with-dv-libs=/usr/X11R6 \
+    --with-magick-exec-prefix=/usr/X11R6
 
 %{__make}
 
