@@ -39,14 +39,13 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %patch1 -p1
 
 %build
-#CXXFLAGS="$CXXFLAGS -fpermissive"
 aclocal
 autoconf
 automake -a -c
 %configure \
-	--with-dv-includes=/usr/X11R6 \
-	--with-dv-libs=/usr/X11R6 \
-	--with-magick-exec-prefix=/usr/X11R6
+--with-dv-includes=%{_prefix}/X11R6 \
+--with-dv-libs=%{_prefix}/X11R6 \
+--with-magick-exec-prefix=%{_prefix}/X11R6
 
 %{__make}
 
@@ -63,7 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%{_bindir}/*
+%attr(755,root,root) %{_bindir}/*
 # todo: split it into subpackages export-*, import-* and filter-*
 %attr(755,root,root) %{_libdir}/%{name}/*.so
 %attr(755,root,root) %{_libdir}/%{name}/*.la
