@@ -1,0 +1,102 @@
+diff -Nur transcode-0.6.12.orig/export/Makefile.am transcode-0.6.12/export/Makefile.am
+--- transcode-0.6.12.orig/export/Makefile.am	2003-12-20 12:49:11.000000000 +0100
++++ transcode-0.6.12/export/Makefile.am	2004-05-08 14:02:59.000000000 +0200
+@@ -3,7 +3,7 @@
+ AUTOMAKE_OPTIONS = 1.3 foreign
+ DEFAULT_INCLUDES = -I$(top_srcdir) -I$(srcdir) -I$(top_builddir) -I.
+ 
+-AC3_LIB=-L../libac3 -lac3_tc
++AC3_LIB=../libac3/libac3_tc.la
+ AC3_INC=-I../libac3 -I$(srcdir)/../libac3
+ 
+ INCLUDES = -I./ -I../ -I$(srcdir)/.. -I../src -I$(srcdir)/../src -I../avilib -I$(srcdir)/../avilib @AVIFILE_CFLAGS@ @LAME_CFLAGS@ $(AC3_INC) @QT_CFLAGS@ -Wall @DV_CFLAGS@ -I../libvo -I$(srcdir)/../libvo @MJPEG_CFLAGS@ @LIBFAME_CFLAGS@ @MAGICK_CFLAGS@ @LIBJPEG_CFLAGS@ -I../libioaux -I$(srcdir)/../libioaux @LZO_CFLAGS@ @PVM3_CFLAGS@ -I../pvm3
+@@ -153,7 +153,7 @@
+ 
+ export_ffmpeg_la_SOURCES = export_ffmpeg.c aud_aux.c ffmpeg_cfg.c vid_aux.c
+ export_ffmpeg_la_LDFLAGS =  -module -avoid-version 
+-export_ffmpeg_la_LIBADD = @LAME_LIBS@ -L../libvo -lvout $(AC3_LIB) -lm
++export_ffmpeg_la_LIBADD = @LAME_LIBS@ ../libvo/libvout.la $(AC3_LIB) -lm
+ 
+ export_divx4raw_la_SOURCES = export_divx4raw.c aud_aux.c divx4_vbr.c
+ export_divx4raw_la_LDFLAGS =  -module -avoid-version 
+diff -Nur transcode-0.6.12.orig/import/Makefile.am transcode-0.6.12/import/Makefile.am
+--- transcode-0.6.12.orig/import/Makefile.am	2003-12-20 12:49:13.000000000 +0100
++++ transcode-0.6.12/import/Makefile.am	2004-05-08 14:02:59.000000000 +0200
+@@ -3,9 +3,9 @@
+ AUTOMAKE_OPTIONS = 1.3 foreign
+ DEFAULT_INCLUDES = -I$(top_srcdir) -I$(srcdir) -I$(top_builddir) -I.
+ 
+-MPEG2_LIB=-L../libmpeg2 -lmpeg2cvs
++MPEG2_LIB=../libmpeg2/libmpeg2cvs.la
+ MPEG2_INC=-I../libmpeg2 -I$(srcdir)/../libmpeg2
+-AC3_LIB=-L../libac3 -lac3_tc
++AC3_LIB=../libac3/libac3_tc.la
+ AC3_INC=-I../libac3 -I$(srcdir)/../libac3
+ 
+ INCLUDES = -Wall -I./ -I../src -I../avilib $(AC3_INC) $(MPEG2_INC) -I../libvo -I$(srcdir)/../src -I$(srcdir)/../avilib -I$(srcdir)/../libvo @LAME_CFLAGS@ @DV_CFLAGS@ @LIBMPEG3_CFLAGS@ @A52_CFLAGS@ @AVIFILE_CFLAGS@ @MAGICK_CFLAGS@ @QT_CFLAGS@ @LIBXML2_CFLAGS@ @DVDREAD_CFLAGS@ @OGG_CFLAGS@ @VORBIS_CFLAGS@ @THEORA_CFLAGS@ @LZO_CFLAGS@
+diff -Nur transcode-0.6.12.orig/libac3/Makefile.am transcode-0.6.12/libac3/Makefile.am
+--- transcode-0.6.12.orig/libac3/Makefile.am	2003-12-21 00:28:08.000000000 +0100
++++ transcode-0.6.12/libac3/Makefile.am	2004-05-08 14:05:43.000000000 +0200
+@@ -2,11 +2,11 @@
+ AUTOMAKE_OPTIONS = 1.3 foreign
+ DEFAULT_INCLUDES = -I$(top_srcdir) -I$(srcdir) -I$(top_builddir) -I.
+ 
+-CFLAGS = -O3 -funroll-loops -ffast-math -DLINUX -fPIC -DPIC @CFLAGS@
++CFLAGS = -funroll-loops -ffast-math -DLINUX -fPIC -DPIC @CFLAGS@
+ 
+-noinst_LIBRARIES = libac3_tc.a
++noinst_LTLIBRARIES = libac3_tc.la
+ 
+-libac3_tc_a_SOURCES = bitstream.c decode.c imdct.c coeff.c exponent.c stats.c\
++libac3_tc_la_SOURCES = bitstream.c decode.c imdct.c coeff.c exponent.c stats.c\
+ 	bit_allocate.c  parse.c crc.c debug.c rematrix.c downmix.c dither.c \
+ 	sanity_check.c
+ 
+diff -Nur transcode-0.6.12.orig/libmpeg2/Makefile.am transcode-0.6.12/libmpeg2/Makefile.am
+--- transcode-0.6.12.orig/libmpeg2/Makefile.am	2003-12-21 00:28:08.000000000 +0100
++++ transcode-0.6.12/libmpeg2/Makefile.am	2004-05-08 14:02:59.000000000 +0200
+@@ -3,9 +3,9 @@
+ 
+ CFLAGS = -Wall -fPIC -DPIC @CFLAGS@ -I../libvo -I$(srcdir)/../libvo
+ 
+-noinst_LIBRARIES = libmpeg2cvs.a
++noinst_LTLIBRARIES = libmpeg2cvs.la
+ 
+-libmpeg2cvs_a_SOURCES = cpu_state.c decode.c header.c stats.c slice.c \
++libmpeg2cvs_la_SOURCES = cpu_state.c decode.c header.c stats.c slice.c \
+ 		      motion_comp.c motion_comp_mmx.c motion_comp_mlib.c\
+ 		      idct.c idct_mlib.c idct_mmx.c \
+ 		      idct_altivec.c motion_comp_altivec.c
+diff -Nur transcode-0.6.12.orig/libvo/Makefile.am transcode-0.6.12/libvo/Makefile.am
+--- transcode-0.6.12.orig/libvo/Makefile.am	2003-12-21 00:28:08.000000000 +0100
++++ transcode-0.6.12/libvo/Makefile.am	2004-05-08 14:09:32.000000000 +0200
+@@ -3,9 +3,9 @@
+ DEFAULT_INCLUDES = -I$(top_srcdir) -I$(srcdir) -I$(top_builddir) -I.
+ 
+ CFLAGS = -Wall -fPIC -DPIC @CFLAGS@ -I../libmpeg2 -I$(srcdir)/../libmpeg2
+-noinst_LIBRARIES = libvout.a
++noinst_LTLIBRARIES = libvout.la
+ 
+-libvout_a_SOURCES = video_out.c video_out_ppm.c video_out_yuv.c yuv2rgb.c yuv2rgb_mmx.c yuv2rgb_mlib.c cpu_accel.c rgb2yuv.c
++libvout_la_SOURCES = video_out.c video_out_ppm.c video_out_yuv.c yuv2rgb.c yuv2rgb_mmx.c yuv2rgb_mlib.c cpu_accel.c rgb2yuv.c
+ 
+ noinst_HEADERS = yuv2rgb.h video_out_internal.h video_out.h rgb2yuv.h mmx.h mm_accel.h 
+ EXTRA_DIST = COPYING AUTHORS README
+diff -Nur transcode-0.6.12.orig/libvo/cpu_accel.c transcode-0.6.12/libvo/cpu_accel.c
+--- transcode-0.6.12.orig/libvo/cpu_accel.c	2003-12-21 00:42:08.000000000 +0100
++++ transcode-0.6.12/libvo/cpu_accel.c	2004-05-08 14:09:06.000000000 +0200
+@@ -34,9 +34,12 @@
+ 
+ #if !defined(PIC) && !defined(__PIC__)
+ #define cpuid(op,eax,ebx,ecx,edx)	\
+-    __asm__ ("cpuid"			\
++	     asm ("pushl %%ebx\n"		\
++	     "cpuid\n"			\
++	     "movl %%ebx, %%edi\n"		\
++	     "popl %%ebx"			\
+ 	     : "=a" (eax),		\
+-	       "=b" (ebx),		\
++	       "=D" (ebx),			\
+ 	       "=c" (ecx),		\
+ 	       "=d" (edx)		\
+ 	     : "a" (op)			\
