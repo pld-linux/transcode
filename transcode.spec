@@ -5,6 +5,11 @@ Version:	0.5.0
 Release:	1
 License:	GPL
 Group:		Applications
+Group(de):	Applikationen
+Group(es):	Aplicaciones
+Group(pl):	Aplikacje
+Group(pt):	Aplicações
+Group(pt_BR):	Aplicações
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	avifile-devel
