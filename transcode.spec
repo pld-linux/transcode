@@ -39,7 +39,7 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %configure \
 	--with-dv-includes=/usr/X11R6 \
 	--with-dv-libs=/usr/X11R6 \
-    --with-magick-exec-prefix=/usr/X11R6
+	--with-magick-exec-prefix=/usr/X11R6
 
 %{__make}
 
