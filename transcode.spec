@@ -8,7 +8,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
@@ -85,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/*.conf
 
 %files avilib
+%defattr(644,root,root,755)
 %doc avilib/README.avilib
 %attr(644,root,root) %{_includedir}/avilib.h
 %attr(644,root,root) %{_libdir}/libavi.a
