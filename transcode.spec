@@ -14,17 +14,15 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.11
-Release:	5
+Version:	0.6.12
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
-# Source0-md5:	f57c9cc96d2c120aaebea67c7f0de83d
+# Source0-md5:	550214ed9f85224423ca8c7308ed96ce
 Patch0:		%{name}-altivec.patch
-Patch1:		%{name}-opt.patch
-Patch2:		%{name}-pic.patch
-Patch3:		%{name}-amfix.patch
-Patch4:		%{name}-types.patch
+Patch1:		%{name}-pic.patch
+Patch2:		%{name}-amfix.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel}
@@ -74,8 +72,6 @@ ogmtools.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %{__libtoolize}
