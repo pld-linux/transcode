@@ -55,16 +55,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf README ChangeLog
+install docs/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+
+gzip -9nf README ChangeLog docs/README* docs/*.{html,txt}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc *.gz docs/*.gz
 %attr(755,root,root) %{_bindir}/*
 # todo: split it into subpackages export-*, import-* and filter-*
 %attr(755,root,root) %{_libdir}/%{name}/*.so
 %attr(755,root,root) %{_libdir}/%{name}/*.la
+%{_mandir}/man1/*
 %{_libdir}/%{name}/*.conf
