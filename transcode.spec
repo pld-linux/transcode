@@ -8,7 +8,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
