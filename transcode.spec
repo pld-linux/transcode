@@ -14,6 +14,7 @@ Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
 # Source0-md5:	34158c90f6e4efbd45c2efb5703af23a
 Patch0:		%{name}-altivec.patch
+Patch1:		%{name}-DESTDIR.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
 BuildRequires:	SDL-devel
@@ -60,6 +61,7 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %prep
 %setup  -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -f missing
@@ -68,7 +70,7 @@ rm -f missing
 %{__aclocal}
 %{__autoheader}
 %{__autoconf}
-#%%{__automake}
+#$%{__automake}
 %configure \
 	--with-avifile-mods \
 	--with-avifile-exec-prefix=%{_prefix} \
