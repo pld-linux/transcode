@@ -15,14 +15,16 @@ Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tgz
 Patch0:		%{name}-magick-config.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
-BuildRequires:	ImageMagick-devel >= 5.4.0
+BuildRequires:	ImageMagick-devel >= 5.4.3
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	avifile-devel >= 0.6.0-0.20011220admin.1
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libmpeg3-devel
+BuildRequires:	libxml2-devel
 BuildRequires:	openquicktime-devel
+BuildRequires:	xvid-devel
 BuildConflicts:	quicktime4linux-devel
 BuildConflicts:	ac3dec-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
