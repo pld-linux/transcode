@@ -49,11 +49,11 @@ Summary:	library to handle avi files from transcode
 Summary(pl):	biblioteka do obróbki plików avi pochodz±ca z transcode
 Group:		Development/Libraries
 
-%description	avilib
+%description avilib
 Avilib is part of transcode made accessible for other programs that require
 it. So far I know of one such program -- ogmtools.
 
-%description	avilib -l pl
+%description avilib -l pl
 Avifile jest czê¶ci± programu transcode udostêpnion± dla innych programów,
 które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 
