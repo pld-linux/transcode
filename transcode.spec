@@ -15,7 +15,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.12
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
@@ -43,7 +43,7 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 %{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
-ExcludeArch:	alpha amd64 ppc
+ExcludeArch:	alpha amd64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fomit-frame-pointer
@@ -124,7 +124,7 @@ ogmtools.
 	--with-magick-mods \
 	--with-magick-exec-prefix=%{_prefix} \
 %ifarch ppc
-	--without-altivec \
+	--disable-altivec \
 %endif
 	--with-libjpeg-mods
 
