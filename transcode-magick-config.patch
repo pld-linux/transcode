@@ -1,12 +1,12 @@
-diff -Nur transcode-0.6.0pre2.orig/acinclude.m4 transcode-0.6.0pre2/acinclude.m4
---- transcode-0.6.0pre2.orig/acinclude.m4	Sun Jan 20 18:18:50 2002
-+++ transcode-0.6.0pre2/acinclude.m4	Mon Jan 28 11:24:34 2002
+diff -Nur transcode-0.6.0pre4.orig/acinclude.m4 transcode-0.6.0pre4/acinclude.m4
+--- transcode-0.6.0pre4.orig/acinclude.m4	Sat Mar  9 08:22:08 2002
++++ transcode-0.6.0pre4/acinclude.m4	Fri Mar 29 16:39:37 2002
 @@ -897,7 +897,7 @@
  
       AC_CHECK_LIB(Magick, InitializeMagick,
        [
 -	MAGICK_CFLAGS=`$MAGICK_CONFIG $magickconf_args --cflags`
 +	MAGICK_CFLAGS=`$MAGICK_CONFIG $magickconf_args --cppflags`
- 	MAGICK_LIBS=`$MAGICK_CONFIG $magickconf_args --libs`
+ 	MAGICK_LIBS="`$MAGICK_CONFIG $magickconf_args --ldflags` `$MAGICK_CONFIG $magickconf_args --libs`" 
  	AC_DEFINE(HAVE_MAGICK)
  	have_magick=yes
