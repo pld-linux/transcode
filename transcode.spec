@@ -1,3 +1,8 @@
+#
+# todo:
+# - split plugins into subpackages
+# - disable building libraries what exists in system (libdv,libmpeg2 etc.)
+#
 
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
