@@ -21,7 +21,6 @@ Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
 # Source0-md5:	eaa65eb3f6cc548cab5d1d26aba79aa5
 Patch0:		%{name}-altivec.patch
-Patch1:		%{name}-DESTDIR.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel}
@@ -67,7 +66,6 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %prep
 %setup  -q
 %patch0 -p1
-#%patch1 -p1
 
 %build
 %configure \
