@@ -4,38 +4,44 @@
 # - disable building libraries what exists in system (libdv,libmpeg2 etc.)
 #
 
+%bcond_without gtk	   		# disable gtk dependent stuff
+%bcond_without avifile 		# disable avifile module
+%bcond_without sdl	   		# disable sdl support
+%bcond_without im	   		# disable imagemagick module
+%bcond_without libmpeg3		# disable libmpeg3 support
+%bcond_without quicktime	# disable quicktime support
+
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.9
-Release:	2
+Version:	0.6.10
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
-# Source0-md5:	34158c90f6e4efbd45c2efb5703af23a
+# Source0-md5:	eaa65eb3f6cc548cab5d1d26aba79aa5
 Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
-BuildRequires:	ImageMagick-devel >= 5.4.3
-BuildRequires:	SDL-devel
+%{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
+%{?with_sdl:BuildRequires:	SDL-devel}
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	avifile-devel >= 0.7.32-0.20030219
+%{?with_avifile:BuildRequires:	avifile-devel >= 0.7.32-0.20030219}
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+-devel
+%{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
-BuildRequires:	libmpeg3-devel
+%{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	openquicktime-devel
-BuildRequires:	quicktime4linux-devel >= 1.5.5
+%{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -61,16 +67,9 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %prep
 %setup  -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
-rm -f missing
-%{__gettextize}
-%{__libtoolize}
-%{__aclocal}
-%{__autoheader}
-%{__autoconf}
-#$%{__automake}
 %configure \
 	--with-avifile-mods \
 	--with-avifile-exec-prefix=%{_prefix} \
