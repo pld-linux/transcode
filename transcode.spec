@@ -40,7 +40,7 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %build
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 %configure \
 --with-dv-includes=%{_prefix}/X11R6 \
 --with-dv-libs=%{_prefix}/X11R6 \
