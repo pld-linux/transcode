@@ -26,7 +26,6 @@ BuildRequires:	libxml2-devel
 BuildRequires:	openquicktime-devel
 BuildRequires:	quicktime4linux-devel >= 1.5.5
 BuildRequires:	xvid-devel
-BuildConflicts:	ac3dec-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
