@@ -1,12 +1,12 @@
-Summary:	converter
-Summary(pl):	converter
+Summary:	Video stream converter
+Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.5.0
 Release:	1
 License:	GPL
 Group:		Applications
-Source0:	%{name}-%{version}.tgz
-URL:		http://
+Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
+URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	avifile-devel
 BuildRequires:	quicktime-devel
 BuildRequires:	libdv-devel
@@ -16,10 +16,10 @@ BuildRequires:	lame-libs-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-N/A
+Linux Video Stream Processing Tool.
 
 %description -l pl
-N/A
+Linuksowe narzêdzie do obróbki strumieni video.
 
 %prep
 %setup  -q
@@ -40,3 +40,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc *.gz
