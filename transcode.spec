@@ -24,6 +24,7 @@ Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar
 Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-pic.patch
 Patch2:		%{name}-amfix.patch
+Patch3:		%{name}-gcc34.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -83,6 +84,7 @@ ogmtools.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
