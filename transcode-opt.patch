@@ -1,0 +1,28 @@
+--- transcode-0.6.11/configure.in.orig	2003-10-01 10:05:29.000000000 +0000
++++ transcode-0.6.11/configure.in	2003-11-14 08:58:18.000000000 +0000
+@@ -396,25 +396,6 @@
+     dnl -Wall -Werror moved to the end to not disturb the configure script
+ 
+ 
+-    dnl -O3
+-    changequote(<<,>>)
+-    OPT_CFLAGS=`echo "$CFLAGS"|sed "s/-O[0-9]*//g;"`
+-    changequote([,])
+-    OPT_CFLAGS="$OPT_CFLAGS -O3"
+-    if test x${USE_MAINTAINER_MODE} != xno; then
+-       OPT_CFLAGS="$OPT_CFLAGS -O2"
+-    else
+-       OPT_CFLAGS="$OPT_CFLAGS -O3"
+-    fi
+-    AC_TRY_CFLAGS([$OPT_CFLAGS],[CFLAGS=$OPT_CFLAGS])
+-
+-    dnl -fomit-frame-pointer
+-    if test x${USE_MAINTAINER_MODE} = xno; then
+-       OPT_CFLAGS="$CFLAGS -fomit-frame-pointer"
+-       AC_TRY_CFLAGS([$OPT_CFLAGS],[CFLAGS=$OPT_CFLAGS])
+-    fi
+-
+-
+     dnl arch-specific flags
+     case "$host_cpu" in
+     i?86-* | k?-*)
