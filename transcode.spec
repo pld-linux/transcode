@@ -1,18 +1,13 @@
 
-#
-# todo:
-# - split plugins into subpackages
-#
-
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
-#Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
+Patch0:		%{name}-altivec.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
 BuildRequires:	a52dec-libs-devel
@@ -50,11 +45,15 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 
 %prep
 %setup  -q
+%patch0 -p1
 
 %build
 %configure \
 	--with-dv-includes=%{_prefix}/X11R6 \
 	--with-dv-libs=%{_prefix}/X11R6 \
+%ifarch ppc
+	--without-altivec \
+%endif
 	--with-magick-exec-prefix=%{_prefix}/X11R6
 
 %{__make}
