@@ -1,6 +1,83 @@
-diff -uNr transcode-0.6.0.orig/libvo/cpu_accel.c transcode-0.6.0/libvo/cpu_accel.c
---- transcode-0.6.0.orig/libvo/cpu_accel.c	Tue Apr  2 12:58:28 2002
-+++ transcode-0.6.0/libvo/cpu_accel.c	Tue Aug  6 10:53:58 2002
+diff -urN transcode-0.6.3.org/libdvenc/enc_input.h transcode-0.6.3/libdvenc/enc_input.h
+--- transcode-0.6.3.org/libdvenc/enc_input.h	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libdvenc/enc_input.h	Thu Feb 27 08:49:45 2003
+@@ -32,6 +32,7 @@
+ extern "C" {
+ #endif
+ 	#define DV_ENC_MAX_INPUT_FILTERS     32
++	#define	DCT_YUV_PRECISION 8
+ 
+ 	typedef struct dv_enc_input_filter_s {
+ 		int (*init)(int wrong_interlace, int force_dct);
+diff -urN transcode-0.6.3.org/libmpeg2/idct.c transcode-0.6.3/libmpeg2/idct.c
+--- transcode-0.6.3.org/libmpeg2/idct.c	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libmpeg2/idct.c	Thu Feb 27 08:52:27 2003
+@@ -263,7 +263,7 @@
+ 	fprintf (stderr, "Using MMX for IDCT transform\n");
+     } else
+ #endif
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+     if (mm_accel & MM_ACCEL_PPC_ALTIVEC) {
+ 	fprintf (stderr, "Using altivec for IDCT transform\n");
+     } else
+@@ -298,7 +298,7 @@
+ 	mpeg2_idct_mmx_init ();
+     } else
+ #endif
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+     if (mm_accel & MM_ACCEL_PPC_ALTIVEC) {
+ 	mpeg2_idct_copy = mpeg2_idct_copy_altivec;
+ 	mpeg2_idct_add = mpeg2_idct_add_altivec;
+diff -urN transcode-0.6.3.org/libmpeg2/idct_altivec.c transcode-0.6.3/libmpeg2/idct_altivec.c
+--- transcode-0.6.3.org/libmpeg2/idct_altivec.c	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libmpeg2/idct_altivec.c	Thu Feb 27 08:49:45 2003
+@@ -25,7 +25,7 @@
+ 
+ #include "config.h"
+ 
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+ 
+ #include <inttypes.h>
+ 
+diff -urN transcode-0.6.3.org/libmpeg2/motion_comp.c transcode-0.6.3/libmpeg2/motion_comp.c
+--- transcode-0.6.3.org/libmpeg2/motion_comp.c	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libmpeg2/motion_comp.c	Thu Feb 27 08:51:41 2003
+@@ -41,7 +41,7 @@
+ 	fprintf (stderr, "Using MMX for motion compensation\n");
+     } else
+ #endif
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+     if (mm_accel & MM_ACCEL_PPC_ALTIVEC) {
+ 	fprintf (stderr, "Using altivec for motion compensation\n");
+     } else
+@@ -65,7 +65,7 @@
+ 	mpeg2_mc = mpeg2_mc_mmx;
+     } else
+ #endif
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+     if (mm_accel & MM_ACCEL_PPC_ALTIVEC) {
+ 	mpeg2_mc = mpeg2_mc_altivec;
+     } else
+diff -urN transcode-0.6.3.org/libmpeg2/motion_comp_altivec.c transcode-0.6.3/libmpeg2/motion_comp_altivec.c
+--- transcode-0.6.3.org/libmpeg2/motion_comp_altivec.c	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libmpeg2/motion_comp_altivec.c	Thu Feb 27 08:49:45 2003
+@@ -25,7 +25,7 @@
+ 
+ #include "config.h"
+ 
+-#ifdef ARCH_PPC
++#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
+ 
+ #include <inttypes.h>
+ 
+diff -urN transcode-0.6.3.org/libvo/cpu_accel.c transcode-0.6.3/libvo/cpu_accel.c
+--- transcode-0.6.3.org/libvo/cpu_accel.c	Thu Feb 27 08:49:36 2003
++++ transcode-0.6.3/libvo/cpu_accel.c	Thu Feb 27 08:49:45 2003
 @@ -115,6 +115,7 @@
  
      canjump = 1;
@@ -19,80 +96,3 @@ diff -uNr transcode-0.6.0.orig/libvo/cpu_accel.c transcode-0.6.0/libvo/cpu_accel
  }
  #endif /* ARCH_PPC */
  
-diff -uNr transcode-0.6.0/libmpeg2/idct_altivec.c transcode-0.6.0.new/libmpeg2/idct_altivec.c
---- transcode-0.6.0/libmpeg2/idct_altivec.c	Tue Apr  2 12:58:28 2002
-+++ transcode-0.6.0.new/libmpeg2/idct_altivec.c	Tue Aug  6 11:42:01 2002
-@@ -25,7 +25,7 @@
- 
- #include "config.h"
- 
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
- 
- #include <inttypes.h>
- 
-diff -uNr transcode-0.6.0/libmpeg2/motion_comp_altivec.c transcode-0.6.0.new/libmpeg2/motion_comp_altivec.c
---- transcode-0.6.0/libmpeg2/motion_comp_altivec.c	Tue Apr  2 12:58:28 2002
-+++ transcode-0.6.0.new/libmpeg2/motion_comp_altivec.c	Tue Aug  6 11:42:33 2002
-@@ -25,7 +25,7 @@
- 
- #include "config.h"
- 
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
- 
- #include <inttypes.h>
- 
-diff -uNr transcode-0.6.0.orig/libmpeg2/idct.c transcode-0.6.0/libmpeg2/idct.c
---- transcode-0.6.0.orig/libmpeg2/idct.c	Wed Nov 28 17:50:04 2001
-+++ transcode-0.6.0/libmpeg2/idct.c	Tue Aug  6 12:33:14 2002
-@@ -74,7 +74,7 @@
- 	fprintf (stderr, "Using MMX for IDCT transform\n");
-     } else
- #endif
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
-     if (config.flags & MM_ACCEL_PPC_ALTIVEC) {
- 	fprintf (stderr, "Using altivec for IDCT transform\n");
-     } else
-@@ -103,7 +103,7 @@
- 	idct_mmx_init ();
-     } else
- #endif
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
-     if (config.flags & MM_ACCEL_PPC_ALTIVEC) {
- 	idct_block_copy = idct_block_copy_altivec;
- 	idct_block_add = idct_block_add_altivec;
-diff -uNr transcode-0.6.0.orig/libmpeg2/motion_comp.c transcode-0.6.0/libmpeg2/motion_comp.c
---- transcode-0.6.0.orig/libmpeg2/motion_comp.c	Thu Feb 14 20:01:27 2002
-+++ transcode-0.6.0/libmpeg2/motion_comp.c	Tue Aug  6 12:34:31 2002
-@@ -43,7 +43,7 @@
- 	fprintf (stderr, "Using MMX for motion compensation\n");
-     } else
- #endif
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
-     if (config.flags & MM_ACCEL_PPC_ALTIVEC) {
-       fprintf (stderr, "Using altivec for motion compensation\n");
-     } else
-@@ -71,7 +71,7 @@
- 	mc_functions = mc_functions_mmx;
-     } else
- #endif
--#ifdef ARCH_PPC
-+#if defined(ARCH_PPC) && defined(HAVE_PPC_ALTIVEC)
-     if (config.flags & MM_ACCEL_PPC_ALTIVEC) {
- 	mc_functions = mc_functions_altivec;
-     } else
-diff -uNr transcode-0.6.0.orig/libdvenc/enc_input.h transcode-0.6.0/libdvenc/enc_input.h
---- transcode-0.6.0.orig/libdvenc/enc_input.h	Thu Dec 27 13:23:31 2001
-+++ transcode-0.6.0/libdvenc/enc_input.h	Tue Aug  6 12:45:39 2002
-@@ -32,6 +32,7 @@
- extern "C" {
- #endif
- 	#define DV_ENC_MAX_INPUT_FILTERS     32
-+	#define	DCT_YUV_PRECISION 8
- 
- 	typedef struct dv_enc_input_filter_s {
- 		int (*init)(int wrong_interlace, int force_dct);
