@@ -45,7 +45,7 @@ diff -Nur transcode-0.6.12.orig/libac3/Makefile.am transcode-0.6.12/libac3/Makef
 +CFLAGS = -funroll-loops -ffast-math -DLINUX -fPIC -DPIC @CFLAGS@
  
 -noinst_LIBRARIES = libac3_tc.a
-+noinst_LIBRARIES = libac3_tc.la
++noinst_LTLIBRARIES = libac3_tc.la
  
 -libac3_tc_a_SOURCES = bitstream.c decode.c imdct.c coeff.c exponent.c stats.c\
 +libac3_tc_la_SOURCES = bitstream.c decode.c imdct.c coeff.c exponent.c stats.c\
@@ -75,7 +75,7 @@ diff -Nur transcode-0.6.12.orig/libvo/Makefile.am transcode-0.6.12/libvo/Makefil
  
  CFLAGS = -Wall -fPIC -DPIC @CFLAGS@ -I../libmpeg2 -I$(srcdir)/../libmpeg2
 -noinst_LIBRARIES = libvout.a
-+noinst_LIBRARIES = libvout.la
++noinst_LTLIBRARIES = libvout.la
  
 -libvout_a_SOURCES = video_out.c video_out_ppm.c video_out_yuv.c yuv2rgb.c yuv2rgb_mmx.c yuv2rgb_mlib.c cpu_accel.c rgb2yuv.c
 +libvout_la_SOURCES = video_out.c video_out_ppm.c video_out_yuv.c yuv2rgb.c yuv2rgb_mmx.c yuv2rgb_mlib.c cpu_accel.c rgb2yuv.c
