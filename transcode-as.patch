@@ -1,0 +1,11 @@
+diff -Nur transcode-0.6.0pre2.orig/configure.in transcode-0.6.0pre2/configure.in
+--- transcode-0.6.0pre2.orig/configure.in	Sun Jan 20 19:28:00 2002
++++ transcode-0.6.0pre2/configure.in	Mon Jan 28 11:47:22 2002
+@@ -19,6 +19,7 @@
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+ AC_PROG_MAKE_SET
++AM_PROG_AS
+ 
+ # functions
+ AC_CHECK_FUNCS([strtol])
