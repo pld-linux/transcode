@@ -32,7 +32,7 @@ BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
-%{?with_avifile:BuildRequires:	avifile-devel >= 0.7.32-0.20030219}
+%{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
