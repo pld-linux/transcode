@@ -13,6 +13,7 @@ License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
 Patch0:		%{name}-altivec.patch
+Patch1:		%{name}-avifile.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
 BuildRequires:	a52dec-libs-devel
