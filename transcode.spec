@@ -16,22 +16,26 @@ Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{n
 Patch0:		%{name}-altivec.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
+BuildRequires:	SDL-devel
+BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	avifile-devel >= 0.7.32-0.20030219
+BuildRequires:	gettext-devel
+BuildRequires:	gtk+-devel
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 BuildRequires:	libmpeg3-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libvorbis-devel
 BuildRequires:	libogg-devel
+BuildRequires:	libtool
+BuildRequires:	libvorbis-devel
+BuildRequires:	libxml2-devel
 BuildRequires:	openquicktime-devel
 BuildRequires:	quicktime4linux-devel >= 1.5.5
 BuildRequires:	xvid-devel
-BuildRequires:	XFree86-devel
-BuildRequires:	SDL-devel
-BuildRequires:	gtk+-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -116,8 +120,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-install -D avilib/avilib.h $RPM_BUILD_ROOT/%{_includedir}/avilib.h
-install avilib/libavi.a $RPM_BUILD_ROOT/%{_libdir}
+install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
+install avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -127,14 +131,15 @@ rm -rf $RPM_BUILD_ROOT
 %doc README ChangeLog docs/README* docs/*.txt docs/html
 %attr(755,root,root) %{_bindir}/*
 # todo: split it into subpackages export-*, import-* and filter-*
+%dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %{_libdir}/%{name}/*.la
-%{_mandir}/man1/*
 %{_libdir}/%{name}/*.conf
 %{_libdir}/%{name}/*.cfg
+%{_mandir}/man1/*
 
 %files avilib
 %defattr(644,root,root,755)
 %doc avilib/README.avilib
-%attr(644,root,root) %{_includedir}/avilib.h
-%attr(644,root,root) %{_libdir}/libavi.a
+%{_includedir}/avilib.h
+%{_libdir}/libavi.a
