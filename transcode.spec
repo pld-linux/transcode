@@ -24,9 +24,13 @@ BuildRequires:	libfame-devel
 BuildRequires:	libmpeg3-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libvorbis-devel
+BuildRequires:	libogg-devel
 BuildRequires:	openquicktime-devel
 BuildRequires:	quicktime4linux-devel >= 1.5.5
 BuildRequires:	xvid-devel
+BuildRequires:	XFree86-devel
+BuildRequires:	SDL-devel
+BuildRequires:	gtk+-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,13 +57,56 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %patch0 -p1
 
 %build
+rm -f missing
+%{__gettextize}
+%{__libtoolize}
+%{__aclocal}
+%{__autoheader}
+%{__autoconf}
+#%{__automake}
 %configure \
+	--with-avifile-mods \
+	--with-avifile-exec-prefix=%{_prefix}/X11R6 \
+	--with-lame \
+	--with-lame-includes=%{_prefix} \
+	--with-lame-libs=%{_prefix} \
+	--with-ogg \
+	--with-ogg-includes=%{_prefix} \
+	--with-ogg-libs=%{_prefix} \
+	--with-vorbis \
+	--with-vorbis-includes=%{_prefix} \
+	--with-vorbis-libs=%{_prefix} \
+	--with-dvdread \
+	--with-dvdread-includes=%{_prefix} \
+	--with-dvdread-libs=%{_prefix} \
+	--with-libmpeg3 \
+	--with-libmpeg3-includes=%{_prefix} \
+	--with-libmpeg3-libs=%{_prefix} \
+	--with-qt \
+	--with-qt-includes=%{_prefix} \
+	--with-qt-libs=%{_prefix}/X11R6 \
+	--with-openqt \
+	--with-openqt-includes=%{_prefix}/X11R6 \
+	--with-openqt-libs=%{_prefix}/X11R6 \
+	--with-dv \
 	--with-dv-includes=%{_prefix}/X11R6 \
 	--with-dv-libs=%{_prefix}/X11R6 \
+	--with-a52 \
+	--with-a52-include=%{_prefix} \
+	--with-a52-libs=%{_prefix} \
+	--with-x \
+	--with-sdl-prefix=%{_prefix}/X11R6 \
+	--with-sdl-exec-prefix=%{_prefix}/X11R6 \
+	--with-gtk-prefix=%{_prefix}/X11R6 \
+	--with-gtk-exec-prefix=%{_prefix}/X11R6 \
+	--with-libfame-prefix=%{_prefix} \
+	--with-libfame-exec-prefix=%{_prefix} \
+	--with-magick-mods \
+	--with-magick-exec-prefix=%{_prefix}/X11R6 \
 %ifarch ppc
 	--without-altivec \
 %endif
-	--with-magick-exec-prefix=%{_prefix}/X11R6
+	--with-libjpeg-mods
 
 %{__make}
 
@@ -83,6 +130,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*.la
 %{_mandir}/man1/*
 %{_libdir}/%{name}/*.conf
+%{_libdir}/%{name}/*.cfg
 
 %files avilib
 %defattr(644,root,root,755)
