@@ -15,7 +15,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.11
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
@@ -83,7 +83,11 @@ ogmtools.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+# ac_cv_* to avoid detection of libdivxdecore as divx4linux (leading to errors)
+# or divx4linux itself (make bcond_with if you want it)
 %configure \
+	ac_cv_header_decore_h=no \
+	ac_cv_header_encore2_h=no \
 	--with-avifile-mods \
 	--with-avifile-exec-prefix=%{_prefix} \
 	--with-lame \
