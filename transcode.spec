@@ -15,17 +15,23 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.11
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
 # Source0-md5:	f57c9cc96d2c120aaebea67c7f0de83d
 Patch0:		%{name}-altivec.patch
+Patch1:		%{name}-opt.patch
+Patch2:		%{name}-pic.patch
+Patch3:		%{name}-amfix.patch
+Patch4:		%{name}-types.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel}
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
+BuildRequires:	autoconf
+BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 0.7.32-0.20030219}
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel
@@ -34,11 +40,14 @@ BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
+BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 %{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		specflags	-fomit-frame-pointer
 
 %description
 Linux Video Stream Processing Tool.
@@ -61,10 +70,19 @@ programów, które jej wymagaj±. Jak na razie znam jeden taki program --
 ogmtools.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--with-avifile-mods \
 	--with-avifile-exec-prefix=%{_prefix} \
