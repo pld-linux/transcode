@@ -13,12 +13,14 @@ Group(pt_BR):	Aplicações
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	a52dec-libs-devel
-BuildRequires:	avifile-devel
+BuildRequires:	avifile-devel >
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libmpeg3-devel
-BuildRequires:	quicktime4linux-devel
+BuildRequires:	openquicktime-devel
+BuildConflicts:	ac3dec-devel
+BuildConflicts:	quicktime4linux-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,6 +33,7 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %setup  -q
 
 %build
+CXXFLAGS="$CXXFLAGS -fpermissive"
 %configure \
 	--with-dv-includes=/usr/X11R6 \
 	--with-dv-libs=/usr/X11R6
@@ -50,3 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
+%{_bindir}/*
+# todo: split it into subpackages export-*, import-* and filter-*
+%attr(755,root,root) %{_libdir}/%{name}/*.so
+%attr(755,root,root) %{_libdir}/%{name}/*.la
+%{_libdir}/%{name}/*.conf
