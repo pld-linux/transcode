@@ -1,16 +1,16 @@
 #
 # todo:
 # - split plugins into subpackages
-# - disable building libraries what exists in system (libdv,libmpeg2 etc.)
+# - disable building of libraries which exist in system (libdv,libmpeg2 etc.)
 #
-
-%bcond_without gtk	   		# disable gtk dependent stuff
+# Conditional build:
+%bcond_without gtk	   	# disable gtk dependent stuff
 %bcond_without avifile 		# disable avifile module
-%bcond_without sdl	   		# disable sdl support
-%bcond_without im	   		# disable imagemagick module
+%bcond_without sdl	   	# disable SDL support
+%bcond_without im	   	# disable imagemagick module
 %bcond_without libmpeg3		# disable libmpeg3 support
 %bcond_without quicktime	# disable quicktime support
-
+#
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
@@ -26,10 +26,7 @@ URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_sdl:BuildRequires:	SDL-devel}
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
-BuildRequires:	autoconf
-BuildRequires:	automake
 %{?with_avifile:BuildRequires:	avifile-devel >= 0.7.32-0.20030219}
-BuildRequires:	gettext-devel
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
@@ -37,7 +34,6 @@ BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
-BuildRequires:	libtool
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 %{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
@@ -56,12 +52,13 @@ Summary(pl):	biblioteka do obróbki plików avi pochodz±ca z transcode
 Group:		Development/Libraries
 
 %description avilib
-Avilib is part of transcode made accessible for other programs that require
-it. So far I know of one such program -- ogmtools.
+Avilib is part of transcode made accessible for other programs that
+require it. So far I know of one such program -- ogmtools.
 
 %description avilib -l pl
-Avifile jest czê¶ci± programu transcode udostêpnion± dla innych programów,
-które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
+Avifile jest czê¶ci± programu transcode udostêpnion± dla innych
+programów, które jej wymagaj±. Jak na razie znam jeden taki program --
+ogmtools.
 
 %prep
 %setup  -q
@@ -117,7 +114,8 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
 install avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}
