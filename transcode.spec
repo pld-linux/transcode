@@ -7,17 +7,16 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.1
-Release:	2
+Version:	0.6.3
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
 Patch0:		%{name}-altivec.patch
-Patch1:		%{name}-avifile.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
 BuildRequires:	a52dec-libs-devel
-BuildRequires:	avifile-devel >= 0.6.0-0.20011220admin.1
+BuildRequires:	avifile-devel >= 0.7.32-0.20030219
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
@@ -56,7 +55,6 @@ które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
 %prep
 %setup  -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 rm -f missing
@@ -68,7 +66,7 @@ rm -f missing
 #%{__automake}
 %configure \
 	--with-avifile-mods \
-	--with-avifile-exec-prefix=%{_prefix}/X11R6 \
+	--with-avifile-exec-prefix=%{_prefix} \
 	--with-lame \
 	--with-lame-includes=%{_prefix} \
 	--with-lame-libs=%{_prefix} \
@@ -86,25 +84,25 @@ rm -f missing
 	--with-libmpeg3-libs=%{_prefix} \
 	--with-qt \
 	--with-qt-includes=%{_prefix} \
-	--with-qt-libs=%{_prefix}/X11R6 \
+	--with-qt-libs=%{_prefix} \
 	--with-openqt \
-	--with-openqt-includes=%{_prefix}/X11R6 \
-	--with-openqt-libs=%{_prefix}/X11R6 \
+	--with-openqt-includes=%{_prefix} \
+	--with-openqt-libs=%{_prefix} \
 	--with-dv \
-	--with-dv-includes=%{_prefix}/X11R6 \
-	--with-dv-libs=%{_prefix}/X11R6 \
+	--with-dv-includes=%{_prefix} \
+	--with-dv-libs=%{_prefix} \
 	--with-a52 \
 	--with-a52-include=%{_prefix} \
 	--with-a52-libs=%{_prefix} \
 	--with-x \
-	--with-sdl-prefix=%{_prefix}/X11R6 \
-	--with-sdl-exec-prefix=%{_prefix}/X11R6 \
-	--with-gtk-prefix=%{_prefix}/X11R6 \
-	--with-gtk-exec-prefix=%{_prefix}/X11R6 \
+	--with-sdl-prefix=%{_prefix} \
+	--with-sdl-exec-prefix=%{_prefix} \
+	--with-gtk-prefix=%{_prefix} \
+	--with-gtk-exec-prefix=%{_prefix} \
 	--with-libfame-prefix=%{_prefix} \
 	--with-libfame-exec-prefix=%{_prefix} \
 	--with-magick-mods \
-	--with-magick-exec-prefix=%{_prefix}/X11R6 \
+	--with-magick-exec-prefix=%{_prefix} \
 %ifarch ppc
 	--without-altivec \
 %endif
