@@ -1,0 +1,14 @@
+diff -urN transcode-0.6.9.orig/export/Makefile.in transcode-0.6.9/export/Makefile.in
+--- transcode-0.6.9.orig/export/Makefile.in	Sun Aug 17 20:42:07 2003
++++ transcode-0.6.9/export/Makefile.in	Sun Aug 17 22:02:21 2003
+@@ -1114,8 +1114,8 @@
+ 
+ 
+ install-exec-hook:
+-	@rm -f $(MOD_PATH)/export_xvid.so
+-	@$(LN_S) export_$(XVID_DEFAULT).so $(MOD_PATH)/export_xvid.so
++	@rm -f $(DESTDIR)$(MOD_PATH)/export_xvid.so
++	@$(LN_S) export_$(XVID_DEFAULT).so $(DESTDIR)$(MOD_PATH)/export_xvid.so
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
