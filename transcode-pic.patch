@@ -77,3 +77,29 @@
  
  noinst_HEADERS = yuv2rgb.h video_out_internal.h video_out.h rgb2yuv.h mmx.h mm_accel.h 
  EXTRA_DIST = COPYING AUTHORS README
+--- transcode-0.6.11/libvo/cpu_accel.c.orig	Fri Nov 14 12:03:50 2003
++++ transcode-0.6.11/libvo/cpu_accel.c	Fri Nov 14 12:15:40 2003
+@@ -33,9 +33,12 @@
+     uint32_t caps;
+ 
+ #define cpuid(op,eax,ebx,ecx,edx)	\
+-    asm ("cpuid"			\
++    asm ("pushl %%ebx\n"		\
++	 "cpuid\n"			\
++	 "movl %%ebx, %%edi\n"		\
++	 "popl %%ebx"			\
+ 	 : "=a" (eax),			\
+-	   "=b" (ebx),			\
++	   "=D" (ebx),			\
+ 	   "=c" (ecx),			\
+ 	   "=d" (edx)			\
+ 	 : "a" (op)			\
+@@ -50,7 +53,7 @@
+ 	 "pushfl\n\t"
+ 	 "popl %0"
+          : "=a" (eax),
+-	   "=b" (ebx)
++	   "=c" (ebx)
+ 	 :
+ 	 : "cc");
+ 
