@@ -1,0 +1,36 @@
+diff -uNr transcode-0.6.1.orig/export/af6_aux.cpp transcode-0.6.1/export/af6_aux.cpp
+--- transcode-0.6.1.orig/export/af6_aux.cpp	Wed Aug 28 22:08:36 2002
++++ transcode-0.6.1/export/af6_aux.cpp	Mon Nov 11 17:52:03 2002
+@@ -32,7 +32,7 @@
+ #include <unistd.h>
+ #include <string.h>
+ 
+-#if defined(HAVE_AVIFILE_INC)
++#if !defined(HAVE_AVIFILE_INC)
+ #include <videoencoder.h>
+ #include <audioencoder.h>
+ #include <fourcc.h>
+diff -uNr transcode-0.6.1.orig/export/export_af6.cpp transcode-0.6.1/export/export_af6.cpp
+--- transcode-0.6.1.orig/export/export_af6.cpp	Wed Aug 28 22:08:36 2002
++++ transcode-0.6.1/export/export_af6.cpp	Mon Nov 11 17:52:54 2002
+@@ -31,7 +31,7 @@
+ #include <string.h>
+ 
+ 
+-#if defined(HAVE_AVIFILE_INC)
++#if !defined(HAVE_AVIFILE_INC)
+ #include <videoencoder.h>
+ #include <audioencoder.h>
+ #include <fourcc.h>
+diff -uNr transcode-0.6.1.orig/import/af6_decore.cpp transcode-0.6.1/import/af6_decore.cpp
+--- transcode-0.6.1.orig/import/af6_decore.cpp	Wed Aug 28 22:08:36 2002
++++ transcode-0.6.1/import/af6_decore.cpp	Mon Nov 11 17:51:02 2002
+@@ -31,7 +31,7 @@
+ 
+ #ifdef HAVE_AVIFILE
+ 
+-#if defined(HAVE_AVIFILE_INC)
++#if !defined(HAVE_AVIFILE_INC)
+ #include <fourcc.h>
+ #include <avifile.h>
+ #include <image.h>
