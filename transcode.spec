@@ -5,11 +5,6 @@ Version:	0.6.0pre2
 Release:	1
 License:	GPL
 Group:		Applications
-Group(de):	Applikationen
-Group(es):	Aplicaciones
-Group(pl):	Aplikacje
-Group(pt):	Aplicações
-Group(pt_BR):	Aplicações
 #Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tgz
 Patch0:		%{name}-magick-config.patch
