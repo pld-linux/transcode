@@ -1,0 +1,11 @@
+--- transcode-0.6.11/export/export_af6.cpp.orig	2003-08-11 18:07:57.000000000 +0000
++++ transcode-0.6.11/export/export_af6.cpp	2003-11-14 09:51:50.000000000 +0000
+@@ -243,7 +243,7 @@
+ 	//------------------      
+ 	CImage imtarget((BitmapInfo*)&bh, (unsigned char *)param->buffer, false);
+ 	ve->EncodeFrame(&imtarget, buffer, &is_key_frame, 
+-			(size_t *) &length, &lpckid);
++			(uint_t *) &length, &lpckid);
+ 	
+ 	if(AVI_write_frame(avifile, (char *) buffer, length, is_key_frame)<0) {
+ 	  AVI_print_error("avi video write error");
