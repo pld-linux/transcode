@@ -8,7 +8,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
@@ -35,6 +35,19 @@ Linux Video Stream Processing Tool.
 %description -l pl
 Linuksowe narzêdzie do obróbki strumieni video.
 
+%package	avilib
+Summary:	library to handle avi files from transcode
+Summary(pl):	biblioteka do obróbki plików avi pochodz±ca z transcode
+Group:		Development/Libraries
+
+%description	avilib
+Avilib is part of transcode made accessible for other programs that require
+it. So far I know of one such program -- ogmtools.
+
+%description	avilib -l pl
+Avifile jest czê¶ci± programu transcode udostêpnion± dla innych programów,
+które jej wymagaj±. Jak na razie znam jeden taki program -- ogmtools.
+
 %prep
 %setup  -q
 
@@ -51,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
+install -D avilib/avilib.h $RPM_BUILD_ROOT/%{_includedir}/avilib.h
+install avilib/libavi.a $RPM_BUILD_ROOT/%{_libdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -63,3 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*.la
 %{_mandir}/man1/*
 %{_libdir}/%{name}/*.conf
+
+%files avilib
+%doc avilib/README.avilib
+%attr(644,root,root) %{_includedir}/avilib.h
+%attr(644,root,root) %{_libdir}/libavi.a
