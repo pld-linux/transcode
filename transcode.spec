@@ -13,7 +13,7 @@ Group(pt_BR):	Aplicações
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	a52dec-libs-devel
-BuildRequires:	avifile-devel >
+BuildRequires:	avifile-devel >= 0.6.0-0.20011220admin.1
 BuildRequires:	lame-libs-devel
 BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
