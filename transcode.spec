@@ -10,17 +10,18 @@
 %bcond_without sdl		# disable SDL support
 %bcond_without im		# disable imagemagick module
 %bcond_without libmpeg3		# disable libmpeg3 support
+%bcond_without mjpeg		# disable mjpegtools support
 %bcond_without quicktime	# disable quicktime support
 #
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.12
-Release:	7
+Version:	0.6.14
+Release:	0.1
 License:	GPL
 Group:		Applications
-Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
-# Source0-md5:	550214ed9f85224423ca8c7308ed96ce
+Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
+# Source0-md5:	9bfef83b7e0fe2c27d25d871fef75a92
 Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-pic.patch
 Patch2:		%{name}-amfix.patch
@@ -34,7 +35,8 @@ BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
 BuildRequires:	freetype-devel >= 2.1.2
-BuildRequires:	glib-devel >= 0.99.7
+BuildRequires:	ffmpeg-devel
+#BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel
@@ -49,7 +51,7 @@ BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	lzo-devel
-BuildRequires:	mjpegtools-devel
+%{?with_mjpeg:BuildRequires:	mjpegtools-devel}
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
@@ -81,10 +83,10 @@ ogmtools.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -155,7 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
-install -D avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}/libavi.a
+install -D avilib/.libs/libavi.a $RPM_BUILD_ROOT%{_libdir}/libavi.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
