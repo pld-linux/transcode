@@ -129,7 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 # todo: split it into subpackages export-*, import-* and filter-*
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
-%attr(755,root,root) %{_libdir}/%{name}/*.la
+%{_libdir}/%{name}/*.la
 %{_mandir}/man1/*
 %{_libdir}/%{name}/*.conf
 %{_libdir}/%{name}/*.cfg
