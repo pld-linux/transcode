@@ -1,14 +1,19 @@
+
+#
+# todo:
+# - split plugins into subpackages
+#
+
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.0pre2
+Version:	0.6.0pre3
 Release:	1
 License:	GPL
 Group:		Applications
 #Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tgz
 Patch0:		%{name}-magick-config.patch
-Patch1:		%{name}-as.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.0
 BuildRequires:	a52dec-libs-devel
@@ -31,7 +36,6 @@ Linuksowe narzêdzie do obróbki strumieni video.
 %prep
 %setup  -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 aclocal
