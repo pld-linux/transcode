@@ -12,6 +12,8 @@ Group(pt):	Aplicações
 Group(pt_BR):	Aplicações
 #Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/%{name}-%{version}.tgz
 Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tgz
+Patch0:		%{name}-magick-config.patch
+Patch1:		%{name}-as.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.0
 BuildRequires:	a52dec-libs-devel
@@ -21,7 +23,7 @@ BuildRequires:	libdv-devel
 BuildRequires:	libdvdread-devel
 BuildRequires:	libmpeg3-devel
 BuildRequires:	openquicktime-devel
-BuildRequires:	quicktime4linux-devel
+BuildConflicts:	quicktime4linux-devel
 BuildConflicts:	ac3dec-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -33,9 +35,14 @@ Linuksowe narzêdzie do obróbki strumieni video.
 
 %prep
 %setup  -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 #CXXFLAGS="$CXXFLAGS -fpermissive"
+aclocal
+autoconf
+automake -a -c
 %configure \
 	--with-dv-includes=/usr/X11R6 \
 	--with-dv-libs=/usr/X11R6 \
