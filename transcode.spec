@@ -63,7 +63,7 @@ rm -f missing
 %{__aclocal}
 %{__autoheader}
 %{__autoconf}
-#%{__automake}
+#%%{__automake}
 %configure \
 	--with-avifile-mods \
 	--with-avifile-exec-prefix=%{_prefix} \
