@@ -5,7 +5,7 @@
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 #
 # Conditional build:
-%bcond_without gtk	   	# disable gtk dependent stuff
+%bcond_without gtk	   	# disable GTK+ dependent stuff
 %bcond_without avifile 		# disable avifile module
 %bcond_without sdl	   	# disable SDL support
 %bcond_without im	   	# disable imagemagick module
