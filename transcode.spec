@@ -7,12 +7,12 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.3
+Version:	0.6.9
 Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/pre/%{name}-%{version}.tar.gz
-# Source0-md5:	65f0982c73821add9b6b78b662496da0
+Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
+# Source0-md5:	34158c90f6e4efbd45c2efb5703af23a
 Patch0:		%{name}-altivec.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 BuildRequires:	ImageMagick-devel >= 5.4.3
@@ -133,6 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 # todo: split it into subpackages export-*, import-* and filter-*
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
+%attr(755,root,root) %{_libdir}/%{name}/*.awk
 %{_libdir}/%{name}/*.la
 %{_libdir}/%{name}/*.conf
 %{_libdir}/%{name}/*.cfg
