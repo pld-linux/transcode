@@ -7,7 +7,7 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.0rc3
+Version:	0.6.0rc4
 Release:	1
 License:	GPL
 Group:		Applications
