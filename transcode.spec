@@ -23,9 +23,7 @@ Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 # Source0-md5:	9bfef83b7e0fe2c27d25d871fef75a92
 Patch0:		%{name}-altivec.patch
-Patch1:		%{name}-pic.patch
-Patch2:		%{name}-amfix.patch
-Patch3:		%{name}-gcc34.patch
+Patch1:		%{name}-amfix.patch
 URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -36,7 +34,6 @@ BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
 BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	ffmpeg-devel
-#BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel
@@ -83,10 +80,8 @@ ogmtools.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch0 -p1
 #%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
 
 %build
 %{__libtoolize}
