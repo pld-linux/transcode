@@ -19,13 +19,13 @@ Version:	0.6.12
 Release:	9
 License:	GPL
 Group:		Applications
-Source0:	http://www.zebra.fh-weingarten.de/~transcode/pre/%{name}-%{version}.tar.gz
+Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 # Source0-md5:	550214ed9f85224423ca8c7308ed96ce
 Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-pic.patch
 Patch2:		%{name}-amfix.patch
 Patch3:		%{name}-gcc34.patch
-URL:		http://www.theorie.physik.uni-goettingen.de/~ostreich/transcode/
+URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	XFree86-devel
