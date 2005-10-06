@@ -1,8 +1,8 @@
-#
-# todo:
+# TODO:
 # - split plugins into subpackages
-# - disable building of libraries which exist in system (libdv,libmpeg2 etc.)
+# - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
+# - update to latest stable release: 1.0.1 (released on On Oct 2 20:05 PDT 2005)
 #
 # Conditional build:
 %bcond_without	gtk		# disable GTK+ dependent stuff
