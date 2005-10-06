@@ -1,0 +1,2 @@
+- disabled altivec support on ppc (it is configureable form %configure)
+- rel.3.
