@@ -1,7 +1,8 @@
 # TODO:
-# - split plugins into subpackages
+# - split plugins into subpackages. (how? splitting criteria? perhaps by external deps, not by functionality (import/export/..?)
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
+# - pvm3 needs recompiled with -fPIC, then it can be used here
 #
 # Conditional build:
 %bcond_without	gtk		# disable GTK+ dependent stuff
@@ -9,13 +10,24 @@
 %bcond_without	sdl		# disable SDL support
 %bcond_without	im		# disable imagemagick module
 %bcond_without	libmpeg3		# disable libmpeg3 support
-%bcond_without	quicktime	# disable quicktime support
+%bcond_without	quicktime	# build with quicktime4linux support
+%bcond_without	jpegmmx	# jpeg-mmx
+%bcond_without	pvm3	# pvm3
+
+# no jpeg-mmx there (doesn't compile)
+%ifarch amd64
+%undefine	with_jpegmmx
+%endif
+# pvm3 needs recompiled with -fPIC
+%ifarch amd64
+%undefine	with_pvm3
+%endif
 #
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.1
-Release:	0.1
+Release:	0.3
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
@@ -38,6 +50,7 @@ BuildRequires:	automake >= 1.3
 BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
+%{?with_jpegmmx:BuildRequires:	jpeg-mmx}
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel >= 0.103
 BuildRequires:	libdvdread-devel
@@ -49,6 +62,7 @@ BuildRequires:	libogg-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
+BuildRequires:	libquicktime-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mjpegtools-devel
@@ -56,7 +70,7 @@ BuildRequires:	mpeg2dec-devel
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
-%{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
+#%{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -91,16 +105,25 @@ ogmtools.
 #%patch4 -p0
 
 %build
+%if 0
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+%endif
 # ac_cv_* to avoid detection of libdivxdecore as divx4linux (leading to errors)
 # or divx4linux itself (make bcond_with if you want it)
 %configure \
 	ac_cv_header_decore_h=no \
 	ac_cv_header_encore2_h=no \
+	--enable-mmx \
+	--enable-3dnow \
+	--enable-sse \
+	--enable-sse2 \
+%ifnarch ppc
+	--enable-altivec \
+%endif
 %ifarch ppc
 	--disable-altivec \
 %endif
@@ -111,44 +134,43 @@ ogmtools.
 	--enable-cmov-extension \
 %endif
 %endif
-	--with-a52 \
-	--with-a52-include=%{_prefix} \
-	--with-a52-libs=%{_prefix} \
-	--with-avifile-mods \
-	--with-avifile-exec-prefix=%{_prefix} \
-	--with-dv \
-	--with-dv-includes=%{_prefix} \
-	--with-dv-libs=%{_prefix} \
-	--with-dvdread \
-	--with-dvdread-includes=%{_prefix} \
-	--with-dvdread-libs=%{_prefix} \
-	--with-gtk-prefix=%{_prefix} \
-	--with-gtk-exec-prefix=%{_prefix} \
-	--with-lame \
-	--with-lame-includes=%{_prefix} \
-	--with-lame-libs=%{_prefix} \
-	--with-libfame-prefix=%{_prefix} \
-	--with-libfame-exec-prefix=%{_prefix} \
-	--with-libjpeg-mods \
-	--with-libmpeg3 \
-	--with-libmpeg3-includes=%{_prefix} \
-	--with-libmpeg3-libs=%{_prefix} \
-	--with-magick-mods \
-	--with-magick-exec-prefix=%{_prefix} \
-	--with-mod-path=%{_libdir}/transcode \
-	--with-ogg \
-	--with-ogg-includes=%{_prefix} \
-	--with-ogg-libs=%{_prefix} \
-	--with-qt \
-	--with-qt-includes=%{_prefix} \
-	--with-qt-libs=%{_prefix} \
-	--with-sdl-prefix=%{_prefix} \
-	--with-sdl-exec-prefix=%{_prefix} \
-	--with-vorbis \
-	--with-vorbis-includes=%{_prefix} \
-	--with-vorbis-libs=%{_prefix} \
+	--enable-libavcodec \
+	--enable-libmpeg2 \
+	--enable-statbuffer \
+	--enable-netstream \
+	--enable-v4l \
+	--disable-bktr \
+	--disable-sunau \
+	--enable-oss \
+	--enable-ibp \
+	--enable-libpostproc \
+	--enable-freetype2 \
+	--enable-avifile \
+	--enable-lame \
+	--enable-ogg \
+	--enable-vorbis \
+	--enable-theora \
+	--enable-libdvdread \
+	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
+	--enable-libdv \
+	--enable-libquicktime \
+	--enable-lzo \
+	--enable-a52 \
+	--enable-a52-default-decoder \
+	--enable-libmpeg3 \
+	--enable-libxml2 \
+	--enable-mjpegtools \
+	--enable-sdl \
+	--enable-gtk \
+	--enable-libfame \
+	--enable-imagemagick \
+	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
+	--enable-libjpeg \
+	--disable-bsdav \
+	--enable-iconv \
+	--enable-xio \
 	--with-x \
-	--without-pvm3
+	--with-libpostproc-includes=%{_includedir}/postproc
 
 %{__make}
 
@@ -159,7 +181,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
-#install -D avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}/libavi.a
 
 # duplicate
 rm -rf $RPM_BUILD_ROOT%{_docdir}/transcode
@@ -184,4 +205,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc avilib/README.avilib
 %{_includedir}/avilib.h
-#%{_libdir}/libavi.a
