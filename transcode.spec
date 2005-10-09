@@ -15,7 +15,7 @@
 %bcond_without	pvm3	# pvm3
 
 # no jpeg-mmx there (doesn't compile)
-%ifarch amd64
+%ifnarch i586 i686 athlon
 %undefine	with_jpegmmx
 %endif
 # pvm3 needs recompiled with -fPIC
