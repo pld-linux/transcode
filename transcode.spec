@@ -2,7 +2,6 @@
 # - split plugins into subpackages
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
-# - update to latest stable release: 1.0.1 (released on On Oct 2 20:05 PDT 2005)
 #
 # Conditional build:
 %bcond_without	gtk		# disable GTK+ dependent stuff
@@ -15,12 +14,12 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	0.6.12
-Release:	11
+Version:	1.0.1
+Release:	0.1
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
-# Source0-md5:	550214ed9f85224423ca8c7308ed96ce
+# Source0-md5:	6fd4bc7651ebccdcd384474eb557d160
 Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-pic.patch
 Patch2:		%{name}-amfix.patch
@@ -31,10 +30,10 @@ URL:		http://www.transcoding.org/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
-BuildRequires:	autoconf
-BuildRequires:	automake >= 1.3
 # was required, maybe it was indirect. don't know ;(
 BuildRequires:	artsc-devel
+BuildRequires:	autoconf
+BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
 BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	glib-devel >= 0.99.7
@@ -53,6 +52,7 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mjpegtools-devel
+BuildRequires:	mpeg2dec-devel
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
@@ -84,11 +84,11 @@ ogmtools.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p0
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
+#%patch4 -p0
 
 %build
 %{__libtoolize}
@@ -159,7 +159,10 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
-install -D avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}/libavi.a
+#install -D avilib/libavi.a $RPM_BUILD_ROOT%{_libdir}/libavi.a
+
+# duplicate
+rm -rf $RPM_BUILD_ROOT%{_docdir}/transcode
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -168,7 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README ChangeLog docs/README* docs/*.txt docs/html
 %attr(755,root,root) %{_bindir}/*
-# todo: split it into subpackages export-*, import-* and filter-*
+# TODO: split it into subpackages export-*, import-* and filter-*
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %attr(755,root,root) %{_libdir}/%{name}/*.awk
@@ -181,4 +184,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc avilib/README.avilib
 %{_includedir}/avilib.h
-%{_libdir}/libavi.a
+#%{_libdir}/libavi.a
