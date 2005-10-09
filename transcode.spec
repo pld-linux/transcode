@@ -11,7 +11,7 @@
 %bcond_without	im		# disable imagemagick module
 %bcond_without	libmpeg3		# disable libmpeg3 support
 %bcond_without	quicktime	# build with quicktime4linux support
-%bcond_without	jpegmmx	# jpeg-mmx
+%bcond_with	jpegmmx	# jpeg-mmx
 %bcond_without	pvm3	# pvm3
 
 # no jpeg-mmx there (doesn't compile)
