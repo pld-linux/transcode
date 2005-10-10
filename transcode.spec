@@ -6,13 +6,13 @@
 #
 # Conditional build:
 %bcond_without	gtk		# disable GTK+ dependent stuff
-%bcond_without	avifile 		# disable avifile module
+%bcond_without	avifile 	# disable avifile module
 %bcond_without	sdl		# disable SDL support
 %bcond_without	im		# disable imagemagick module
-%bcond_without	libmpeg3		# disable libmpeg3 support
+%bcond_without	libmpeg3	# disable libmpeg3 support
 %bcond_without	quicktime	# build with quicktime4linux support
-%bcond_with	jpegmmx	# jpeg-mmx
-%bcond_without	pvm3	# pvm3
+%bcond_with	jpegmmx		# jpeg-mmx
+%bcond_without	pvm3		# pvm3
 
 # no jpeg-mmx there (doesn't compile)
 %ifnarch i586 i686 athlon
@@ -43,7 +43,7 @@ URL:		http://www.transcoding.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 # was required, maybe it was indirect. don't know ;(
-BuildRequires:	artsc-devel
+#BuildRequires:	artsc-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
@@ -70,6 +70,7 @@ BuildRequires:	mpeg2dec-devel
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
+%{?with_pvm3:BuildRequires:	pvm-devel}
 #%{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -134,43 +135,43 @@ ogmtools.
 	--enable-cmov-extension \
 %endif
 %endif
-	--enable-libavcodec \
-	--enable-libmpeg2 \
-	--enable-statbuffer \
-	--enable-netstream \
-	--enable-v4l \
 	--disable-bktr \
+	--disable-bsdav \
 	--disable-sunau \
-	--enable-oss \
-	--enable-ibp \
-	--enable-libpostproc \
-	--enable-freetype2 \
-	--enable-avifile \
-	--enable-lame \
-	--enable-ogg \
-	--enable-vorbis \
-	--enable-theora \
-	--enable-libdvdread \
-	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
-	--enable-libdv \
-	--enable-libquicktime \
-	--enable-lzo \
 	--enable-a52 \
 	--enable-a52-default-decoder \
-	--enable-libmpeg3 \
-	--enable-libxml2 \
-	--enable-mjpegtools \
-	--enable-sdl \
+	--enable-freetype2 \
 	--enable-gtk \
-	--enable-libfame \
-	--enable-imagemagick \
-	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
-	--enable-libjpeg \
-	--disable-bsdav \
+	--enable-ibp \
 	--enable-iconv \
+	--enable-imagemagick \
+	--enable-lame \
+	--enable-libavcodec \
+	--enable-libdv \
+	--enable-libdvdread \
+	--enable-libfame \
+	--enable-libjpeg \
+	--enable-libmpeg2 \
+	--enable-libmpeg3 \
+	--enable-libpostproc \
+	--enable-libquicktime \
+	--enable-libxml2 \
+	--enable-lzo \
+	--enable-mjpegtools \
+	--enable-netstream \
+	--enable-ogg \
+	--enable-oss \
+	--enable-sdl \
+	--enable-statbuffer \
+	--enable-theora \
+	--enable-v4l \
+	--enable-vorbis \
 	--enable-xio \
-	--with-x \
-	--with-libpostproc-includes=%{_includedir}/postproc
+	--%{!?with_avifile:dis}%{?with_avifile:en}able-avifile \
+	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
+	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
+	--with-libpostproc-includes=%{_includedir}/postproc \
+	--with-x
 
 %{__make}
 
