@@ -42,8 +42,6 @@ URL:		http://www.transcoding.org/
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
-# was required, maybe it was indirect. don't know ;(
-#BuildRequires:	artsc-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
