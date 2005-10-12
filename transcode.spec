@@ -19,7 +19,7 @@
 %undefine	with_jpegmmx
 %endif
 # pvm3 needs recompiled with -fPIC
-%ifarch amd64
+%ifarch %{x8664} alpha
 %undefine	with_pvm3
 %endif
 #
@@ -32,11 +32,6 @@ License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 # Source0-md5:	6fd4bc7651ebccdcd384474eb557d160
-Patch0:		%{name}-altivec.patch
-Patch1:		%{name}-pic.patch
-Patch2:		%{name}-amfix.patch
-Patch3:		%{name}-gcc34.patch
-Patch4:		%{name}-libdv-0.103.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -97,11 +92,6 @@ ogmtools.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
-#%patch4 -p0
 
 %build
 %if 0
