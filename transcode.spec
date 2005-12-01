@@ -26,12 +26,12 @@
 Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
-Version:	1.0.1
-Release:	0.3
+Version:	1.0.2
+Release:	0.1
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
-# Source0-md5:	6fd4bc7651ebccdcd384474eb557d160
+# Source0-md5:	e353c0ab7e927a8672528e05a9ae960b
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -39,7 +39,8 @@ BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
-%{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
+%{?with_avifile:BuildRequires:	avifile-devel > 3:0.7.43-1}
+BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
 BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
@@ -50,7 +51,6 @@ BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
-# liblve-devel ???
 BuildRequires:	libogg-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
@@ -59,7 +59,7 @@ BuildRequires:	libquicktime-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mjpegtools-devel
-BuildRequires:	mpeg2dec-devel
+BuildRequires:	mpeg2dec-devel >= 0.4.0b
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
