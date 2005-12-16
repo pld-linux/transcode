@@ -106,15 +106,14 @@ ogmtools.
 %configure \
 	ac_cv_header_decore_h=no \
 	ac_cv_header_encore2_h=no \
+%ifarch ppc
+	--disable-altivec \
+%endif
+%ifarch %{ix86} %{x8664}
 	--enable-mmx \
 	--enable-3dnow \
 	--enable-sse \
 	--enable-sse2 \
-%ifnarch ppc
-	--enable-altivec \
-%endif
-%ifarch ppc
-	--disable-altivec \
 %endif
 %ifarch %{ix86}
 %ifarch i386 i486 i586 \
