@@ -10,7 +10,6 @@
 %bcond_without	sdl		# disable SDL support
 %bcond_without	im		# disable imagemagick module
 %bcond_without	libmpeg3	# disable libmpeg3 support
-%bcond_without	quicktime	# build with quicktime4linux support
 %bcond_with	jpegmmx		# jpeg-mmx
 %bcond_with	pvm3		# pvm3
 
@@ -52,10 +51,12 @@ BuildRequires:	libfame-devel
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libquicktime-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
-BuildRequires:	libquicktime-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	lzo-devel
 BuildRequires:	mjpegtools-devel
@@ -63,8 +64,8 @@ BuildRequires:	mpeg2dec-devel >= 0.4.0b
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
+BuildRequires:	pkgconfig
 %{?with_pvm3:BuildRequires:	pvm-devel}
-#%{?with_quicktime:BuildRequires:	quicktime4linux-devel >= 1.5.5}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
