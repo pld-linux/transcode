@@ -5,11 +5,14 @@
 # - pvm3 needs recompiled with -fPIC, then it can be used here
 #
 # Conditional build:
-%bcond_without	gtk		# disable GTK+ dependent stuff
 %bcond_without	avifile 	# disable avifile module
-%bcond_without	sdl		# disable SDL support
-%bcond_without	im		# disable imagemagick module
+%bcond_without	gtk			# disable GTK+ dependent stuff
+%bcond_without	im			# disable imagemagick module
+%bcond_without	libmpeg2	# disable libmpeg2 support
 %bcond_without	libmpeg3	# disable libmpeg3 support
+%bcond_without	lzo			# disable lzo support
+%bcond_without	mjpeg		# disable mjpegtools support
+%bcond_without	sdl			# disable SDL support
 %bcond_with	jpegmmx		# jpeg-mmx
 %bcond_with	pvm3		# pvm3
 
@@ -26,41 +29,41 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.2
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 # Source0-md5:	e353c0ab7e927a8672528e05a9ae960b
 URL:		http://www.transcoding.org/
+BuildRequires:	xorg-lib-libXaw-devel
+BuildRequires:	xorg-lib-libXpm-devel
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
-BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel > 3:0.7.43-1}
 BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
 BuildRequires:	freetype-devel >= 2.1.2
-BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
 BuildRequires:	lame-libs-devel >= 3.89
-BuildRequires:	libdv-devel >= 0.103
+BuildRequires:	libdv-devel >= 0.104-3
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libquicktime-devel
+%{?with_quicktime:BuildRequires:	libquicktime-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	lzo-devel
-BuildRequires:	mjpegtools-devel
-BuildRequires:	mpeg2dec-devel >= 0.4.0b
+%{?with_lzo:BuildRequires:	lzo-devel}
+%{?with_mjpeg:BuildRequires:	mjpegtools-devel}
+%{?with_libmpeg2:BuildRequires:	mpeg2dec-devel >= 0.4.0b}
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
@@ -129,7 +132,7 @@ ogmtools.
 	--enable-a52 \
 	--enable-a52-default-decoder \
 	--enable-freetype2 \
-	--enable-gtk \
+	--%{!?with_gtk:dis}%{?with_quicktime:en}able-gtk \
 	--enable-ibp \
 	--enable-iconv \
 	--enable-imagemagick \
@@ -139,13 +142,13 @@ ogmtools.
 	--enable-libdvdread \
 	--enable-libfame \
 	--enable-libjpeg \
-	--enable-libmpeg2 \
-	--enable-libmpeg3 \
+	--%{!?with_libmpeg2:dis}%{?with_libmpeg2:en}able-libmpeg2 \
+	--%{!?with_libmpeg3:dis}%{?with_libmpeg3:en}able-libmpeg3 \
 	--enable-libpostproc \
-	--enable-libquicktime \
+	--%{!?with_quicktime:dis}%{?with_quicktime:en}able-libquicktime \
 	--enable-libxml2 \
-	--enable-lzo \
-	--enable-mjpegtools \
+	--%{!?with_lzo:dis}%{?with_lzo:en}able-lzo \
+	--%{!?with_mjpeg:dis}%{?with_mjpeg:en}able-mjpegtools \
 	--enable-netstream \
 	--enable-ogg \
 	--enable-oss \
