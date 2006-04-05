@@ -1,8 +1,8 @@
-#
-# todo:
+# TODO:
 # - split plugins into subpackages
-# - disable building of libraries which exist in system (libdv,libmpeg2 etc.)
+# - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
+# - update to latest stable release: 1.0.1 (released on On Oct 2 20:05 PDT 2005)
 #
 # Conditional build:
 %bcond_without	gtk		# disable GTK+ dependent stuff
@@ -16,7 +16,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.12
-Release:	10
+Release:	13
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
@@ -25,6 +25,7 @@ Patch0:		%{name}-altivec.patch
 Patch1:		%{name}-pic.patch
 Patch2:		%{name}-amfix.patch
 Patch3:		%{name}-gcc34.patch
+Patch4:		%{name}-libdv-0.103.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -32,12 +33,14 @@ BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
+# was required, maybe it was indirect. don't know ;(
+BuildRequires:	artsc-devel
 %{?with_avifile:BuildRequires:	avifile-devel >= 3:0.7.32-0.20030219}
 BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	glib-devel >= 0.99.7
 %{?with_gtk:BuildRequires:	gtk+-devel}
 BuildRequires:	lame-libs-devel >= 3.89
-BuildRequires:	libdv-devel
+BuildRequires:	libdv-devel >= 0.103
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel
 BuildRequires:	libjpeg-devel
@@ -85,6 +88,7 @@ ogmtools.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 %build
 %{__libtoolize}
