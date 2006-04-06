@@ -132,7 +132,7 @@ ogmtools.
 	--enable-a52 \
 	--enable-a52-default-decoder \
 	--enable-freetype2 \
-	--%{!?with_gtk:dis}%{?with_quicktime:en}able-gtk \
+	--%{!?with_gtk:dis}%{?with_gtk:en}able-gtk \
 	--enable-ibp \
 	--enable-iconv \
 	--enable-imagemagick \
