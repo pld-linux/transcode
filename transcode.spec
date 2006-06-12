@@ -16,7 +16,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	0.6.12
-Release:	13
+Release:	14
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
