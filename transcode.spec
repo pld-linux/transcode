@@ -37,6 +37,7 @@ Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 Patch0:		%{name}-ac.patch
 Patch1:		%{name}-lzo2.patch
 Patch2:		%{name}-bigdir.patch
+Patch3:		%{name}-mpeg3.patch
 URL:		http://www.transcoding.org/
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXpm-devel
@@ -102,6 +103,7 @@ ogmtools.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+%patch3 -p0
 
 %build
 %{__libtoolize}
