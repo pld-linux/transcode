@@ -29,11 +29,14 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.2
-Release:	1.1
+Release:	1.2
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
 # Source0-md5:	e353c0ab7e927a8672528e05a9ae960b
+Patch0:		%{name}-ac.patch
+Patch1:		%{name}-lzo2.patch
+Patch2:		%{name}-bigdir.patch
 URL:		http://www.transcoding.org/
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXpm-devel
@@ -96,15 +99,17 @@ ogmtools.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p0
 
 %build
-%if 0
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%endif
+CPPFLAGS="-I/usr/include/lzo"; export CPPFLAGS
 # ac_cv_* to avoid detection of libdivxdecore as divx4linux (leading to errors)
 # or divx4linux itself (make bcond_with if you want it)
 %configure \
