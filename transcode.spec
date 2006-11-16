@@ -106,6 +106,7 @@ ogmtools.
 %patch3 -p0
 
 %build
+export LDFLAGS="-L%{_libdir} $LDFLAGS"
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
