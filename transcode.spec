@@ -170,10 +170,11 @@ ogmtools.
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
 	--with-libpostproc-includes=%{_includedir}/postproc \
 	--with-x \
-	--with-libdir=%{_libdir}
+	%if "%{_lib}" == "lib64"
+        	--with-libdir=%{_libdir}64
+	%endif
 
-%{__make} \
-	LDFLAGS="%{rpmldflags}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
