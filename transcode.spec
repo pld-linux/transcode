@@ -38,6 +38,7 @@ Patch0:		%{name}-ac.patch
 Patch1:		%{name}-lzo2.patch
 Patch2:		%{name}-bigdir.patch
 Patch3:		%{name}-mpeg3.patch
+Patch4:		%{name}-libx86_64.patch
 URL:		http://www.transcoding.org/
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXpm-devel
@@ -104,6 +105,7 @@ ogmtools.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p0
+%patch4 -p0
 
 %build
 %{__libtoolize}
@@ -169,10 +171,7 @@ ogmtools.
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
 	--with-libpostproc-includes=%{_includedir}/postproc \
-	--with-x \
-	%if "%{_lib}" == "lib64"
-        	--with-libdir=%{_libdir}64
-	%endif
+	--with-x
 
 %{__make}
 
