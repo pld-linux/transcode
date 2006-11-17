@@ -169,7 +169,8 @@ ogmtools.
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
 	--with-libpostproc-includes=%{_includedir}/postproc \
-	--with-x
+	--with-x \
+	--with-libdir=%{_libdir}
 
 %{__make} \
 	LDFLAGS="%{rpmldflags}"
