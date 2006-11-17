@@ -154,6 +154,7 @@ ogmtools.
 	--%{!?with_quicktime:dis}%{?with_quicktime:en}able-libquicktime \
 	--enable-libxml2 \
 	--%{!?with_lzo:dis}%{?with_lzo:en}able-lzo \
+	--with-lzo-includes=%{_includedir}/lzo \
 	--%{!?with_mjpeg:dis}%{?with_mjpeg:en}able-mjpegtools \
 	--enable-netstream \
 	--enable-ogg \
@@ -171,8 +172,7 @@ ogmtools.
 	--with-x
 
 %{__make} \
-	LDFLAGS="%{rpmldflags}" \
-	CPPFLAGS="-I/usr/include/lzo"
+	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
