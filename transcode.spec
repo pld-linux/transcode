@@ -106,13 +106,11 @@ ogmtools.
 %patch3 -p0
 
 %build
-export LDFLAGS="-L%{_libdir} $LDFLAGS"
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-CPPFLAGS="-I/usr/include/lzo"; export CPPFLAGS
 # ac_cv_* to avoid detection of libdivxdecore as divx4linux (leading to errors)
 # or divx4linux itself (make bcond_with if you want it)
 %configure \
@@ -172,7 +170,9 @@ CPPFLAGS="-I/usr/include/lzo"; export CPPFLAGS
 	--with-libpostproc-includes=%{_includedir}/postproc \
 	--with-x
 
-%{__make}
+%{__make} \
+	LDFLAGS="%{rpmldflags}" \
+	CPPFLAGS="-I/usr/include/lzo"
 
 %install
 rm -rf $RPM_BUILD_ROOT
