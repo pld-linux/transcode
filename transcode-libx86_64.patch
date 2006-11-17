@@ -1,0 +1,11 @@
+--- configure.in	2006-11-17 20:15:43.921297496 +0100
++++ configure.in-new	2006-11-17 20:16:05.251054880 +0100
+@@ -35,8 +35,6 @@
+ dnl we got $AWK already, but not it's full path
+ AC_PATH_PROG(PATH_TO_AWK, $AWK)
+ 
+-deflib="/lib"
+-
+ is_osx=false
+ case "x${target_os}" in
+   xdarwin*)
