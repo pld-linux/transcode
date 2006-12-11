@@ -29,7 +29,7 @@ Summary:	Video stream converter
 Summary(pl):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.2
-Release:	1.2
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
@@ -39,6 +39,7 @@ Patch1:		%{name}-lzo2.patch
 Patch2:		%{name}-bigdir.patch
 Patch3:		%{name}-mpeg3.patch
 Patch4:		%{name}-libx86_64.patch
+Patch5:		%{name}-ffmpeg.patch
 URL:		http://www.transcoding.org/
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXpm-devel
@@ -106,6 +107,7 @@ ogmtools.
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
+%patch5 -p1
 
 %build
 %{__libtoolize}
