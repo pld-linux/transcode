@@ -66,7 +66,7 @@ BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
-%{?with_lzo:BuildRequires:	lzo-devel}
+%{?with_lzo:BuildRequires:	lzo-devel >= 2.0}
 %{?with_mjpeg:BuildRequires:	mjpegtools-devel}
 %{?with_libmpeg2:BuildRequires:	mpeg2dec-devel >= 0.4.0b}
 %ifarch %{ix86}
