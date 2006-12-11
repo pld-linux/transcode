@@ -41,10 +41,9 @@ Patch3:		%{name}-mpeg3.patch
 Patch4:		%{name}-libx86_64.patch
 Patch5:		%{name}-ffmpeg.patch
 URL:		http://www.transcoding.org/
-BuildRequires:	xorg-lib-libXaw-devel
-BuildRequires:	xorg-lib-libXpm-devel
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
+BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
