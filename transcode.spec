@@ -26,7 +26,7 @@
 %endif
 #
 Summary:	Video stream converter
-Summary(pl.UTF-8):   Konwerter strumieni video
+Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.2
 Release:	2
@@ -88,7 +88,7 @@ Linuksowe narzędzie do obróbki strumieni video.
 
 %package avilib
 Summary:	library to handle avi files from transcode
-Summary(pl.UTF-8):   biblioteka do obróbki plików avi pochodząca z transcode
+Summary(pl.UTF-8):	biblioteka do obróbki plików avi pochodząca z transcode
 Group:		Development/Libraries
 
 %description avilib
