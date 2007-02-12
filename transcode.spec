@@ -26,7 +26,7 @@
 %endif
 #
 Summary:	Video stream converter
-Summary(pl):	Konwerter strumieni video
+Summary(pl.UTF-8):   Konwerter strumieni video
 Name:		transcode
 Version:	1.0.2
 Release:	2
@@ -83,21 +83,21 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Linux Video Stream Processing Tool.
 
-%description -l pl
-Linuksowe narzêdzie do obróbki strumieni video.
+%description -l pl.UTF-8
+Linuksowe narzÄ™dzie do obrÃ³bki strumieni video.
 
 %package avilib
 Summary:	library to handle avi files from transcode
-Summary(pl):	biblioteka do obróbki plików avi pochodz±ca z transcode
+Summary(pl.UTF-8):   biblioteka do obrÃ³bki plikÃ³w avi pochodzÄ…ca z transcode
 Group:		Development/Libraries
 
 %description avilib
 Avilib is part of transcode made accessible for other programs that
 require it. So far I know of one such program - ogmtools.
 
-%description avilib -l pl
-Avifile jest czê¶ci± programu transcode udostêpnion± dla innych
-programów, które jej wymagaj±. Jak na razie znam jeden taki program -
+%description avilib -l pl.UTF-8
+Avifile jest czÄ™Å›ciÄ… programu transcode udostÄ™pnionÄ… dla innych
+programÃ³w, ktÃ³re jej wymagajÄ…. Jak na razie znam jeden taki program -
 ogmtools.
 
 %prep
