@@ -38,6 +38,7 @@ Patch0:		%{name}-lzo2.patch
 Patch1:		%{name}-bigdir.patch
 Patch2:		%{name}-mpeg3.patch
 Patch3:		%{name}-libx86_64.patch
+Patch4:		%{name}-mm_accel.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -104,6 +105,7 @@ ogmtools.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%patch4 -p1
 
 %build
 %{__libtoolize}
