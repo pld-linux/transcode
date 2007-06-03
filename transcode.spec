@@ -28,18 +28,16 @@
 Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.0.2
-Release:	2
+Version:	1.0.3
+Release:	0.1
 License:	GPL
 Group:		Applications
-Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
-# Source0-md5:	e353c0ab7e927a8672528e05a9ae960b
-Patch0:		%{name}-ac.patch
-Patch1:		%{name}-lzo2.patch
-Patch2:		%{name}-bigdir.patch
-Patch3:		%{name}-mpeg3.patch
-Patch4:		%{name}-libx86_64.patch
-Patch5:		%{name}-ffmpeg.patch
+Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
+# Source0-md5:	4f6eb832123ea28c54f0d4952733bcb6
+Patch0:		%{name}-lzo2.patch
+Patch1:		%{name}-bigdir.patch
+Patch2:		%{name}-mpeg3.patch
+Patch3:		%{name}-libx86_64.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -103,11 +101,9 @@ ogmtools.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+%patch1 -p0
 %patch2 -p0
 %patch3 -p0
-%patch4 -p0
-%patch5 -p1
 
 %build
 %{__libtoolize}
@@ -121,7 +117,7 @@ ogmtools.
 	ac_cv_header_decore_h=no \
 	ac_cv_header_encore2_h=no \
 %ifarch ppc
-	--disable-altivec \
+	--enable-altivec \
 %endif
 %ifarch %{ix86} %{x8664}
 	--enable-mmx \
