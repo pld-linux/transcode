@@ -12,6 +12,7 @@
 %bcond_without	libmpeg3	# disable libmpeg3 support
 %bcond_without	lzo			# disable lzo support
 %bcond_without	mjpeg		# disable mjpegtools support
+%bcond_without	quicktime	# disable libquicktime support
 %bcond_without	sdl			# disable SDL support
 %bcond_with	jpegmmx		# jpeg-mmx
 %bcond_with	pvm3		# pvm3
@@ -28,17 +29,16 @@
 Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.0.3
-Release:	0.1
+Version:	1.0.4
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	4f6eb832123ea28c54f0d4952733bcb6
+# Source0-md5:	6f05b9efb8d67540dd6dbb7b8db47504
 Patch0:		%{name}-lzo2.patch
 Patch1:		%{name}-bigdir.patch
-Patch2:		%{name}-mpeg3.patch
-Patch3:		%{name}-libx86_64.patch
-Patch4:		%{name}-mm_accel.patch
+Patch2:		%{name}-libx86_64.patch
+Patch3:		%{name}-mm_accel.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -104,8 +104,7 @@ ogmtools.
 %patch0 -p1
 %patch1 -p0
 %patch2 -p0
-%patch3 -p0
-%patch4 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
