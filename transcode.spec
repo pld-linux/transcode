@@ -53,7 +53,7 @@ BuildRequires:	freetype-devel >= 2.1.2
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel >= 0.104-3
 BuildRequires:	libdvdread-devel
-BuildRequires:	libfame-devel
+BuildRequires:	libfame-devel >= 0.9.1
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
