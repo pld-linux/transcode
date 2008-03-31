@@ -39,6 +39,7 @@ Patch0:		%{name}-lzo2.patch
 Patch1:		%{name}-bigdir.patch
 Patch2:		%{name}-libx86_64.patch
 Patch3:		%{name}-mm_accel.patch
+Patch4:		%{name}-compile_nuv.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -105,6 +106,7 @@ ogmtools.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
@@ -165,7 +167,7 @@ ogmtools.
 	--enable-theora \
 	--enable-v4l \
 	--enable-vorbis \
-	--enable-xio \
+	--disable-xio \
 	--%{!?with_avifile:dis}%{?with_avifile:en}able-avifile \
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
