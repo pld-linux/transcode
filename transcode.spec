@@ -3,6 +3,8 @@
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 # - pvm3 needs recompiled with -fPIC, then it can be used here
+# - --enable-xio requires some libs from http://loci.cs.utk.edu/
+# - rm Makefiles from htmldir
 #
 # Conditional build:
 %bcond_without	avifile 	# disable avifile module
@@ -30,7 +32,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.5
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
