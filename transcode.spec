@@ -32,7 +32,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
