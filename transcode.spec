@@ -148,7 +148,7 @@ ogmtools.
 	--%{!?with_gtk:dis}%{?with_gtk:en}able-gtk \
 	--enable-ibp \
 	--enable-iconv \
-	--enable-imagemagick \
+	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
 	--enable-lame \
 	--enable-libavcodec \
 	--enable-libdv \
