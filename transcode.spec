@@ -8,7 +8,6 @@
 #
 # Conditional build:
 %bcond_without	avifile 	# disable avifile module
-%bcond_without	gtk			# disable GTK+ dependent stuff
 %bcond_without	im			# disable imagemagick module
 %bcond_without	libmpeg2	# disable libmpeg2 support
 %bcond_without	libmpeg3	# disable libmpeg3 support
@@ -51,7 +50,6 @@ BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel > 3:0.7.43-1}
 BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
 BuildRequires:	freetype-devel >= 2.1.2
-%{?with_gtk:BuildRequires:	gtk+-devel}
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel >= 0.104-3
@@ -143,7 +141,6 @@ ogmtools.
 	--enable-a52 \
 	--enable-a52-default-decoder \
 	--enable-freetype2 \
-	--%{!?with_gtk:dis}%{?with_gtk:en}able-gtk \
 	--enable-ibp \
 	--enable-iconv \
 	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
