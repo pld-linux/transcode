@@ -3,15 +3,17 @@
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 # - pvm3 needs recompiled with -fPIC, then it can be used here
+# - --enable-xio requires some libs from http://loci.cs.utk.edu/
+# - rm Makefiles from htmldir
 #
 # Conditional build:
 %bcond_without	avifile 	# disable avifile module
-%bcond_without	gtk			# disable GTK+ dependent stuff
 %bcond_without	im			# disable imagemagick module
 %bcond_without	libmpeg2	# disable libmpeg2 support
 %bcond_without	libmpeg3	# disable libmpeg3 support
 %bcond_without	lzo			# disable lzo support
 %bcond_without	mjpeg		# disable mjpegtools support
+%bcond_without	quicktime	# disable libquicktime support
 %bcond_without	sdl			# disable SDL support
 %bcond_with	jpegmmx		# jpeg-mmx
 %bcond_with	pvm3		# pvm3
@@ -26,24 +28,20 @@
 %endif
 #
 Summary:	Video stream converter
-Summary(pl):	Konwerter strumieni video
+Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.0.2
-Release:	2
+Version:	1.0.7
+Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://www.jakemsr.com/transcode/%{name}-%{version}.tar.gz
-# Source0-md5:	e353c0ab7e927a8672528e05a9ae960b
-Patch0:		%{name}-ac.patch
-Patch1:		%{name}-lzo2.patch
-Patch2:		%{name}-bigdir.patch
-Patch3:		%{name}-mpeg3.patch
-Patch4:		%{name}-libx86_64.patch
-Patch5:		%{name}-ffmpeg.patch
+Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
+# Source0-md5:	48a57f36861450dde78d6a1ad5edf99f
+Patch0:		%{name}-bigdir.patch
+Patch1:		%{name}-libx86_64.patch
+Patch2:		%{name}-mm_accel.patch
+Patch3:		%{name}-ImageMagick.patch
 URL:		http://www.transcoding.org/
-BuildRequires:	xorg-lib-libXaw-devel
-BuildRequires:	xorg-lib-libXpm-devel
-%{?with_im:BuildRequires:	ImageMagick-devel >= 5.4.3}
+%{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
@@ -51,12 +49,12 @@ BuildRequires:	automake >= 1.3
 %{?with_avifile:BuildRequires:	avifile-devel > 3:0.7.43-1}
 BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
 BuildRequires:	freetype-devel >= 2.1.2
-%{?with_gtk:BuildRequires:	gtk+-devel}
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
 BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel >= 0.104-3
 BuildRequires:	libdvdread-devel
-BuildRequires:	libfame-devel
+BuildRequires:	libfame-devel >= 0.9.1
+BuildRequires:	libgomp-devel
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
@@ -75,6 +73,8 @@ BuildRequires:	nasm >= 0.98.34
 %endif
 BuildRequires:	pkgconfig
 %{?with_pvm3:BuildRequires:	pvm-devel}
+BuildRequires:	xorg-lib-libXaw-devel
+BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -83,31 +83,29 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Linux Video Stream Processing Tool.
 
-%description -l pl
-Linuksowe narzêdzie do obróbki strumieni video.
+%description -l pl.UTF-8
+Linuksowe narzÄ™dzie do obrÃ³bki strumieni video.
 
 %package avilib
 Summary:	library to handle avi files from transcode
-Summary(pl):	biblioteka do obróbki plików avi pochodz±ca z transcode
+Summary(pl.UTF-8):	biblioteka do obrÃ³bki plikÃ³w avi pochodzÄ…ca z transcode
 Group:		Development/Libraries
 
 %description avilib
 Avilib is part of transcode made accessible for other programs that
 require it. So far I know of one such program - ogmtools.
 
-%description avilib -l pl
-Avifile jest czê¶ci± programu transcode udostêpnion± dla innych
-programów, które jej wymagaj±. Jak na razie znam jeden taki program -
+%description avilib -l pl.UTF-8
+Avifile jest czÄ™Å›ciÄ… programu transcode udostÄ™pnionÄ… dla innych
+programÃ³w, ktÃ³re jej wymagajÄ…. Jak na razie znam jeden taki program -
 ogmtools.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p1
+%patch0 -p0
+%patch1 -p0
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -121,7 +119,7 @@ ogmtools.
 	ac_cv_header_decore_h=no \
 	ac_cv_header_encore2_h=no \
 %ifarch ppc
-	--disable-altivec \
+	--enable-altivec \
 %endif
 %ifarch %{ix86} %{x8664}
 	--enable-mmx \
@@ -142,10 +140,9 @@ ogmtools.
 	--enable-a52 \
 	--enable-a52-default-decoder \
 	--enable-freetype2 \
-	--%{!?with_gtk:dis}%{?with_gtk:en}able-gtk \
 	--enable-ibp \
 	--enable-iconv \
-	--enable-imagemagick \
+	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
 	--enable-lame \
 	--enable-libavcodec \
 	--enable-libdv \
@@ -168,7 +165,7 @@ ogmtools.
 	--enable-theora \
 	--enable-v4l \
 	--enable-vorbis \
-	--enable-xio \
+	--disable-xio \
 	--%{!?with_avifile:dis}%{?with_avifile:en}able-avifile \
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \

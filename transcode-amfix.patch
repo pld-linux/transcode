@@ -1,0 +1,64 @@
+--- transcode-0.6.11/import/Makefile.am.orig	2003-11-14 09:20:49.000000000 +0000
++++ transcode-0.6.11/import/Makefile.am	2003-11-14 09:22:52.000000000 +0000
+@@ -184,7 +184,6 @@
+ 		   decode_mpeg2.c  \
+ 		   decode_yuv.c    \
+ 		   fileinfo.c      \
+-		   ioaux.c         \
+ 		   decode_dv.c     \
+ 		   decode_mp3.c    \
+ 		   mpg123.c        \
+@@ -197,28 +196,35 @@
+ 		   decode_mov.c    \
+ 		   decode_lzo.c
+ 
+-tcdecode_LDADD = -L../ffmpeg/libavcodec -ltcavcodec @LAME_LIBS@ $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout @DV_LIBS@ $(VORBISFILE) @THEORA_LIBS@ @VORBIS_LIBS@ @OGG_LIBS@ @DLDARWINLIB@ @QT_LIBS@ @LZO_LIBS@ -lm
++tcdecode_LDADD = -L../ffmpeg/libavcodec -ltcavcodec @LAME_LIBS@ $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout @DV_LIBS@ $(VORBISFILE) @THEORA_LIBS@ @VORBIS_LIBS@ @OGG_LIBS@ @DLDARWINLIB@ @QT_LIBS@ @LZO_LIBS@ -lm \
++	ioaux.lo
+ 
+ tcrequant_SOURCES = tcrequant.c
+ tcrequant_LDADD = -lm 
+ 
+-tccat_SOURCES = tccat.c dvd_reader.c fileinfo.c ioaux.c iodump.c scan_dv.c extract_avi.c ioxml.c ts_reader.c
+-tccat_LDADD = @DVDREAD_LIBS@ -L../avilib -lavi @DV_LIBS@  @LIBXML2_LIBS@ @DLDARWINLIB@ -lm
+-
+-tcscan_SOURCES = tcscan.c fileinfo.c bitrate.c ioaux.c scan_pes.c aux_pes.c mpg123.c ac3scan.c scan_dv.c
+-tcscan_LDADD = @LAME_LIBS@ $(AC3_LIB) -L../avilib -lavi @DV_LIBS@ -lm 
+-
+-tcprobe_SOURCES = tcprobe.c probe_stream.c fileinfo.c bitrate.c ioaux.c extract_avi.c scan_pes.c aux_pes.c mpg123.c ac3scan.c dvd_reader.c probe_dvd.c decode_dv.c extract_yuv.c probe_nuv.c probe_wav.c iodump.c probe_socket.c scan_dv.c probe_im.c probe_mov.c probe_xml.c ioxml.c probe_lav.c probe_ogg.c ts_reader.c probe_vnc.c extract_mxf.c
+-tcprobe_LDADD = @LAME_LIBS@ -L../avilib -lavi $(AC3_LIB) @DVDREAD_LIBS@ @DV_LIBS@ @MAGICK_LIBS@ @QT_LIBS@ @LIBXML2_LIBS@ @VORBIS_LIBS@ @THEORA_LIBS@ @OGG_LIBS@ @DLDARWINLIB@ -lm
+-
+-tcextract_SOURCES = tcextract.c extract_ac3.c extract_mpeg2.c extract_pcm.c fileinfo.c extract_yuv.c extract_rgb.c extract_dv.c ioaux.c extract_mp3.c scan_dv.c aux_pes.c extract_ogm.c extract_lzo.c extract_mxf.c
+-tcextract_LDADD = $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout -L../avilib -lavi @DV_LIBS@ @THEORA_LIBS@ @OGG_LIBS@ @VORBIS_LIBS@ -lm
+-
+-tcdemux_SOURCES = tcdemux.c fileinfo.c ioaux.c dvd_reader.c seqinfo.c demuxer.c aux_pes.c packets.c scan_pack.c scan_dv.c demux_pass.c
+-tcdemux_LDADD = $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout -L../avilib -lavi @DVDREAD_LIBS@ @DV_LIBS@ @DLDARWINLIB@ -lm
+-
+-tcxmlcheck_SOURCES = tcxmlcheck.c probe_xml.c ioxml.c ioaux.c fileinfo.c scan_dv.c
+-tcxmlcheck_LDADD = @LIBXML2_LIBS@ @DV_LIBS@ -lm
++tccat_SOURCES = tccat.c fileinfo.c iodump.c scan_dv.c extract_avi.c ts_reader.c
++tccat_LDADD = @DVDREAD_LIBS@ -L../avilib -lavi @DV_LIBS@  @LIBXML2_LIBS@ @DLDARWINLIB@ -lm \
++	dvd_reader.lo ioaux.lo ioxml.lo
++
++tcscan_SOURCES = tcscan.c fileinfo.c bitrate.c scan_pes.c aux_pes.c mpg123.c scan_dv.c
++tcscan_LDADD = @LAME_LIBS@ $(AC3_LIB) -L../avilib -lavi @DV_LIBS@ -lm \
++	ioaux.lo ac3scan.lo
++
++tcprobe_SOURCES = tcprobe.c probe_stream.c fileinfo.c bitrate.c extract_avi.c scan_pes.c aux_pes.c mpg123.c probe_dvd.c decode_dv.c extract_yuv.c probe_nuv.c probe_wav.c iodump.c probe_socket.c scan_dv.c probe_im.c probe_mov.c probe_lav.c probe_ogg.c ts_reader.c probe_vnc.c extract_mxf.c
++tcprobe_LDADD = @LAME_LIBS@ -L../avilib -lavi $(AC3_LIB) @DVDREAD_LIBS@ @DV_LIBS@ @MAGICK_LIBS@ @QT_LIBS@ @LIBXML2_LIBS@ @VORBIS_LIBS@ @THEORA_LIBS@ @OGG_LIBS@ @DLDARWINLIB@ -lm \
++	ioaux.lo ac3scan.lo dvd_reader.lo probe_xml.lo ioxml.lo
++
++tcextract_SOURCES = tcextract.c extract_ac3.c extract_mpeg2.c extract_pcm.c fileinfo.c extract_yuv.c extract_rgb.c extract_dv.c extract_mp3.c scan_dv.c aux_pes.c extract_ogm.c extract_lzo.c extract_mxf.c
++tcextract_LDADD = $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout -L../avilib -lavi @DV_LIBS@ @THEORA_LIBS@ @OGG_LIBS@ @VORBIS_LIBS@ -lm \
++	ioaux.lo
++
++tcdemux_SOURCES = tcdemux.c fileinfo.c seqinfo.c demuxer.c aux_pes.c packets.c scan_pack.c scan_dv.c demux_pass.c
++tcdemux_LDADD = $(AC3_LIB) $(MPEG2_LIB) -L../libvo -lvout -L../avilib -lavi @DVDREAD_LIBS@ @DV_LIBS@ @DLDARWINLIB@ -lm \
++	ioaux.lo dvd_reader.lo
++
++tcxmlcheck_SOURCES = tcxmlcheck.c fileinfo.c scan_dv.c
++tcxmlcheck_LDADD = @LIBXML2_LIBS@ @DV_LIBS@ -lm \
++	probe_xml.lo ioxml.lo ioaux.lo
+ 
+ tcxpm2rgb_SOURCES = tcxpm2rgb.c
+ 
