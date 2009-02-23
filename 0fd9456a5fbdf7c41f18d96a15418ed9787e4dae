@@ -1,0 +1,7 @@
+- up to 1.1.0
+- TODO updated: export-*, import-* and filter-* subpackages are now in
+place
+- obsolete patches: bigdir and mm-accel removed
+- patches: libx86_64 and ImageMagick updated
+- some cleaning in %files
+- needs testing
