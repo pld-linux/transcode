@@ -97,7 +97,7 @@ ogmtools.
 Summary:	export plugins for transcode
 Summary(pl.UTF-8):	wtyczki eksportowe transcode
 Group:		Development/Libraries
-Requires:	%{name}-%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description export
 Export plugins for transcode.
@@ -109,7 +109,7 @@ Wtyczki eksportowe dla transcode.
 Summary:	import plugins for transcode
 Summary(pl.UTF-8):	wtyczki importujące transcode
 Group:		Development/Libraries
-Requires:	%{name}-%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description import
 Import plugins for transcode.
@@ -121,7 +121,7 @@ Wtyczki importujące dla transcode.
 Summary:	filters for transcode
 Summary(pl.UTF-8):	filtry transcode
 Group:		Development/Libraries
-Requires:	%{name}-%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description filter
 Filters for transcode.
