@@ -1,11 +1,11 @@
---- configure.in	2006-11-17 20:15:43.921297496 +0100
-+++ configure.in-new	2006-11-17 20:16:05.251054880 +0100
-@@ -35,8 +35,6 @@
- dnl we got $AWK already, but not it's full path
- AC_PATH_PROG(PATH_TO_AWK, $AWK)
+diff -burNp transcode-1.1.0/configure.in transcode-1.1.0-dud/configure.in
+--- transcode-1.1.0/configure.in	2009-01-17 09:16:36.000000000 +0100
++++ transcode-1.1.0-dud/configure.in	2009-01-29 11:01:30.530815070 +0100
+@@ -49,7 +49,6 @@ AC_PATH_PROG(PATH_TO_AWK, $AWK)
+ dnl Check the OS.  This has to be done here, after checks for proograms and
+ dnl before checks for libraries.
  
 -deflib="/lib"
--
- is_osx=false
- case "x${target_os}" in
-   xdarwin*)
+ is_linux=no
+ is_bsd=no
+ is_osx=no
