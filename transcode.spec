@@ -1,5 +1,4 @@
 # TODO:
-# - split plugins into subpackages. (how? splitting criteria? perhaps by external deps, not by functionality (import/export/..?)
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 # - pvm3 needs recompiled with -fPIC, then it can be used here
@@ -7,10 +6,8 @@
 # - rm Makefiles from htmldir
 #
 # Conditional build:
-%bcond_without	avifile 	# disable avifile module
 %bcond_without	im			# disable imagemagick module
 %bcond_without	libmpeg2	# disable libmpeg2 support
-%bcond_without	libmpeg3	# disable libmpeg3 support
 %bcond_without	lzo			# disable lzo support
 %bcond_without	mjpeg		# disable mjpegtools support
 %bcond_without	quicktime	# disable libquicktime support
@@ -30,23 +27,20 @@
 Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.0.7
+Version:	1.1.0
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	48a57f36861450dde78d6a1ad5edf99f
-Patch0:		%{name}-bigdir.patch
-Patch1:		%{name}-libx86_64.patch
-Patch2:		%{name}-mm_accel.patch
-Patch3:		%{name}-ImageMagick.patch
+# Source0-md5:	5ca205e32b546402a48ea8004a7b3232
+Patch0:		%{name}-libx86_64.patch
+Patch1:		%{name}-ImageMagick.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
-%{?with_avifile:BuildRequires:	avifile-devel > 3:0.7.43-1}
 BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
 BuildRequires:	freetype-devel >= 2.1.2
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
@@ -56,7 +50,6 @@ BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel >= 0.9.1
 BuildRequires:	libgomp-devel
 BuildRequires:	libjpeg-devel
-%{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
 BuildRequires:	libpng-devel
 %{?with_quicktime:BuildRequires:	libquicktime-devel}
@@ -100,12 +93,46 @@ Avifile jest częścią programu transcode udostępnioną dla innych
 programów, które jej wymagają. Jak na razie znam jeden taki program -
 ogmtools.
 
+%package export
+Summary:	export plugins for transcode
+Summary(pl.UTF-8):	wtyczki eksportowe transcode
+Group:		Development/Libraries
+Requires:	%{name}-%{version}-%{release}
+
+%description export
+Export plugins for transcode.
+
+%description export -l pl.UTF-8
+Wtyczki eksportowe dla transcode.
+
+%package import
+Summary:	import plugins for transcode
+Summary(pl.UTF-8):	wtyczki importujące transcode
+Group:		Development/Libraries
+Requires:	%{name}-%{version}-%{release}
+
+%description import
+Import plugins for transcode.
+
+%description import -l pl.UTF-8
+Wtyczki importujące dla transcode.
+
+%package filter
+Summary:	filters for transcode
+Summary(pl.UTF-8):	filtry transcode
+Group:		Development/Libraries
+Requires:	%{name}-%{version}-%{release}
+
+%description filter
+Filters for transcode.
+
+%description filter -l pl.UTF-8
+Filtry transcode.
+
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
-%patch3 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -127,37 +154,25 @@ ogmtools.
 	--enable-sse \
 	--enable-sse2 \
 %endif
-%ifarch %{ix86}
-%ifarch i386 i486 i586 \
-	--disable-cmov-extension \
-%else
-	--enable-cmov-extension \
-%endif
-%endif
 	--disable-bktr \
 	--disable-bsdav \
 	--disable-sunau \
 	--enable-a52 \
-	--enable-a52-default-decoder \
 	--enable-freetype2 \
-	--enable-ibp \
 	--enable-iconv \
 	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
 	--enable-lame \
 	--enable-libavcodec \
 	--enable-libdv \
 	--enable-libdvdread \
-	--enable-libfame \
 	--enable-libjpeg \
 	--%{!?with_libmpeg2:dis}%{?with_libmpeg2:en}able-libmpeg2 \
-	--%{!?with_libmpeg3:dis}%{?with_libmpeg3:en}able-libmpeg3 \
 	--enable-libpostproc \
 	--%{!?with_quicktime:dis}%{?with_quicktime:en}able-libquicktime \
 	--enable-libxml2 \
 	--%{!?with_lzo:dis}%{?with_lzo:en}able-lzo \
 	--with-lzo-includes=%{_includedir}/lzo \
 	--%{!?with_mjpeg:dis}%{?with_mjpeg:en}able-mjpegtools \
-	--enable-netstream \
 	--enable-ogg \
 	--enable-oss \
 	--enable-sdl \
@@ -165,8 +180,6 @@ ogmtools.
 	--enable-theora \
 	--enable-v4l \
 	--enable-vorbis \
-	--disable-xio \
-	--%{!?with_avifile:dis}%{?with_avifile:en}able-avifile \
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
 	--with-libpostproc-includes=%{_includedir}/postproc \
@@ -192,12 +205,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README ChangeLog docs/README* docs/*.txt docs/html
 %attr(755,root,root) %{_bindir}/*
-# TODO: split it into subpackages export-*, import-* and filter-*
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/*.so*
-%attr(755,root,root) %{_libdir}/%{name}/*.awk
-%{_libdir}/%{name}/*.la
-%{_libdir}/%{name}/*.conf
+%{_libdir}/%{name}/a52_decore.la
+%{_libdir}/%{name}/a52_decore.so
+%{_libdir}/%{name}/parse_csv.awk
 %{_libdir}/%{name}/*.cfg
 %{_mandir}/man1/*
 
@@ -205,3 +216,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc avilib/README.avilib
 %{_includedir}/avilib.h
+
+%files export
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/export*.la*
+%attr(755,root,root) %{_libdir}/%{name}/export*.so*
+
+%files import
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/import*.la*
+%attr(755,root,root) %{_libdir}/%{name}/import*.so*
+
+%files filter
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/filter*.la*
+%attr(755,root,root) %{_libdir}/%{name}/filter*.so*
+%attr(755,root,root) %{_libdir}/%{name}/filter*.awk
