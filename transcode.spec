@@ -28,7 +28,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.1.0
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
@@ -60,7 +60,7 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 %{?with_lzo:BuildRequires:	lzo-devel >= 2.0}
 %{?with_mjpeg:BuildRequires:	mjpegtools-devel}
-%{?with_libmpeg2:BuildRequires:	mpeg2dec-devel >= 0.4.0b}
+%{?with_libmpeg2:BuildRequires:	libmpeg2-devel >= 0.4.0b}
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
