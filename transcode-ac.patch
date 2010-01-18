@@ -1,0 +1,11 @@
+--- transcode-1.1.0/configure.in~	2010-01-18 23:51:00.044353703 +0100
++++ transcode-1.1.0/configure.in	2010-01-18 23:51:03.234768965 +0100
+@@ -145,7 +145,7 @@
+ 
+ dnl Special check for sysconf() to ensure _SC_PAGESIZE is also available.
+ AC_CACHE_CHECK([for sysconf(_SC_PAGESIZE)], ac_cv_sysconf_with_sc_pagesize,
+-    [AC_COMPILE_IFELSE(AC_LANG_PROGRAM([#include <unistd.h>], [sysconf(_SC_PAGESIZE)])],
++    [AC_COMPILE_IFELSE(AC_LANG_PROGRAM([#include <unistd.h>], [sysconf(_SC_PAGESIZE)]),
+         [ac_cv_sysconf_with_sc_pagesize=yes],
+         [ac_cv_sysconf_with_sc_pagesize=no])])
+ if test x"$ac_cv_sysconf_with_sc_pagesize" = x"yes"; then
