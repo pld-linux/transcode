@@ -35,6 +35,7 @@ Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
 # Source0-md5:	5ca205e32b546402a48ea8004a7b3232
 Patch0:		%{name}-libx86_64.patch
 Patch1:		%{name}-ImageMagick.patch
+Patch2:		%{name}-ac.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -50,6 +51,7 @@ BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel >= 0.9.1
 BuildRequires:	libgomp-devel
 BuildRequires:	libjpeg-devel
+%{?with_libmpeg2:BuildRequires:	libmpeg2-devel >= 0.4.0b}
 BuildRequires:	libogg-devel
 BuildRequires:	libpng-devel
 %{?with_quicktime:BuildRequires:	libquicktime-devel}
@@ -60,7 +62,6 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	libxml2-devel
 %{?with_lzo:BuildRequires:	lzo-devel >= 2.0}
 %{?with_mjpeg:BuildRequires:	mjpegtools-devel}
-%{?with_libmpeg2:BuildRequires:	libmpeg2-devel >= 0.4.0b}
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
@@ -133,6 +134,7 @@ Filtry transcode.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
