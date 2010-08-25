@@ -39,10 +39,10 @@ Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-bigdir.patch
 Patch1:		%{name}-libx86_64.patch
 Patch2:		%{name}-mm_accel.patch
-Patch3:		%{name}-ImageMagick.patch
 URL:		http://www.transcoding.org/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
+BuildRequires:	XFree86-devel
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
@@ -54,7 +54,6 @@ BuildRequires:	lame-libs-devel >= 3.89
 BuildRequires:	libdv-devel >= 0.104-3
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel >= 0.9.1
-BuildRequires:	libgomp-devel
 BuildRequires:	libjpeg-devel
 %{?with_libmpeg3:BuildRequires:	libmpeg3-devel}
 BuildRequires:	libogg-devel
@@ -73,8 +72,6 @@ BuildRequires:	nasm >= 0.98.34
 %endif
 BuildRequires:	pkgconfig
 %{?with_pvm3:BuildRequires:	pvm-devel}
-BuildRequires:	xorg-lib-libXaw-devel
-BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -105,7 +102,6 @@ ogmtools.
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__libtoolize}
