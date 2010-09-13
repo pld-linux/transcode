@@ -31,7 +31,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.0.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
@@ -70,12 +70,19 @@ BuildRequires:	libxml2-devel
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
+%ifarch ppc
+BuildRequires:	gcc >= 5:4.1
+%endif
 BuildRequires:	pkgconfig
 %{?with_pvm3:BuildRequires:	pvm-devel}
 BuildRequires:	xvid-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fomit-frame-pointer
+
+%ifarch ppc
+%define		__cc	gcc4
+%endif
 
 %description
 Linux Video Stream Processing Tool.
