@@ -27,22 +27,23 @@
 Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.1.0
-Release:	11
+Version:	1.1.5
+Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://fromani.exit1.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	5ca205e32b546402a48ea8004a7b3232
+Source0:	http://download.berlios.de/tcforge/%{name}-%{version}.tar.bz2
+# Source0-md5:	41ac6b1c0fe30f3aab286e771fc31b9e
 Patch0:		%{name}-libx86_64.patch
 Patch1:		%{name}-ImageMagick.patch
-Patch2:		%{name}-ac.patch
-URL:		http://www.transcoding.org/
+Patch2:		%{name}-mpa.patch
+Patch3:		%{name}-ffmpeg.patch
+URL:		http://tcforge.berlios.de/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
-BuildRequires:	ffmpeg-devel >= 0.4.9-0.pre1
+BuildRequires:	ffmpeg-devel >= 0.7.1
 BuildRequires:	freetype-devel >= 2.1.2
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
 BuildRequires:	lame-libs-devel >= 3.89
@@ -135,6 +136,7 @@ Filtry transcode.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
