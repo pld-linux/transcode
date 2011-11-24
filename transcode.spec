@@ -28,7 +28,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.1.5
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://download.berlios.de/tcforge/%{name}-%{version}.tar.bz2
