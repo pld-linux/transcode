@@ -1,0 +1,16 @@
+--- transcode-1.1.5/filter/filter_pp.c.orig	2012-04-30 12:17:34.732045838 +0200
++++ transcode-1.1.5/filter/filter_pp.c	2012-04-30 12:23:21.942284917 +0200
+@@ -38,8 +38,13 @@
+ 
+ /* FIXME: these use the filter ID as an index--the ID can grow
+  * arbitrarily large, so this needs to be fixed */
++#if LIBPOSTPROC_VERSION_INT < (52<<16)
+ static pp_mode_t *mode[100];
+ static pp_context_t *context[100];
++#else
++static pp_mode *mode[100];
++static pp_context *context[100];
++#endif
+ static int width[100], height[100];
+ static int pre[100];
+ 

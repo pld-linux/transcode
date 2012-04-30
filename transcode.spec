@@ -37,6 +37,7 @@ Patch0:		%{name}-libx86_64.patch
 Patch1:		%{name}-ImageMagick.patch
 Patch2:		%{name}-mpa.patch
 Patch3:		%{name}-ffmpeg.patch
+Patch4:		libpostproc52.patch
 URL:		http://tcforge.berlios.de/
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
@@ -137,6 +138,7 @@ Filtry transcode.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
