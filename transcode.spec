@@ -28,7 +28,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.1.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	https://bitbucket.org/france/transcode-tcforge/downloads/%{name}-%{version}.tar.bz2
@@ -47,6 +47,7 @@ URL:		https://bitbucket.org/france/transcode-tcforge/overview
 BuildRequires:	a52dec-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
+BuildRequires:	faac-devel
 BuildRequires:	ffmpeg-devel >= 0.7.1
 BuildRequires:	freetype-devel >= 2.1.2
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
@@ -171,6 +172,8 @@ Filtry transcode.
 	--disable-bsdav \
 	--disable-sunau \
 	--enable-a52 \
+	--enable-alsa \
+	--enable-faac \
 	--enable-freetype2 \
 	--enable-x264 \
 	--enable-iconv \
@@ -181,6 +184,7 @@ Filtry transcode.
 	--enable-libdvdread \
 	--enable-libjpeg \
 	--%{!?with_libmpeg2:dis}%{?with_libmpeg2:en}able-libmpeg2 \
+	--enable-libmpeg2convert \
 	--enable-libpostproc \
 	--%{!?with_quicktime:dis}%{?with_quicktime:en}able-libquicktime \
 	--enable-libxml2 \
