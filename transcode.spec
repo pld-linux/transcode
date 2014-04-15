@@ -27,18 +27,21 @@
 Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
-Version:	1.1.5
-Release:	7
+Version:	1.1.7
+Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://download.berlios.de/tcforge/%{name}-%{version}.tar.bz2
-# Source0-md5:	41ac6b1c0fe30f3aab286e771fc31b9e
+Source0:	https://bitbucket.org/france/transcode-tcforge/downloads/%{name}-%{version}.tar.bz2
+# Source0-md5:	9bb25a796a8591fb764de46ee87ce505
 Patch0:		%{name}-libx86_64.patch
-Patch1:		%{name}-ImageMagick.patch
-Patch2:		%{name}-mpa.patch
-Patch3:		%{name}-ffmpeg.patch
-Patch4:		libpostproc52.patch
-URL:		http://tcforge.berlios.de/
+Patch1:		%{name}-1.1.7-ffmpeg-0.10.patch
+Patch2:		%{name}-1.1.7-ffmpeg-0.11.patch
+Patch3:		%{name}-1.1.7-ffmpeg2.patch
+Patch4:		%{name}-1.1.7-ffmpeg.patch
+Patch5:		%{name}-1.1.7-libav-9.patch
+Patch6:		%{name}-1.1.7-preset-force.patch
+Patch7:		%{name}-1.1.7-preset-free.patch
+URL:		https://bitbucket.org/france/transcode-tcforge/overview
 %{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
 BuildRequires:	a52dec-libs-devel
@@ -61,6 +64,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
+BuildRequires:	libx264-devel
 BuildRequires:	libxml2-devel
 %{?with_lzo:BuildRequires:	lzo-devel >= 2.0}
 %{?with_mjpeg:BuildRequires:	mjpegtools-devel}
@@ -135,10 +139,13 @@ Filtry transcode.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+%patch1 -p0
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+%patch4 -p0
+%patch5 -p0
+%patch6 -p1
+%patch7 -p1
 
 %build
 %{__libtoolize}
@@ -165,6 +172,7 @@ Filtry transcode.
 	--disable-sunau \
 	--enable-a52 \
 	--enable-freetype2 \
+	--enable-x264 \
 	--enable-iconv \
 	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
 	--enable-lame \
@@ -185,10 +193,11 @@ Filtry transcode.
 	--enable-statbuffer \
 	--enable-theora \
 	--enable-v4l \
+	--enable-libv4l2 \
+	--enable-libv4lconvert \
 	--enable-vorbis \
 	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
 	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
-	--with-libpostproc-includes=%{_includedir}/postproc \
 	--with-x
 
 %{__make}
