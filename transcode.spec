@@ -2,18 +2,18 @@
 # - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
 # - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 # - pvm3 needs recompiled with -fPIC, then it can be used here
-# - --enable-xio requires some libs from http://loci.cs.utk.edu/
+# - --enable-ibp requires some libs from http://loci.cs.utk.edu/ [libfdr libibp libexnode liblbone libend2end libmd5 libdes libaes liblors]
 # - rm Makefiles from htmldir
 #
 # Conditional build:
-%bcond_without	im			# disable imagemagick module
-%bcond_without	libmpeg2	# disable libmpeg2 support
-%bcond_without	lzo			# disable lzo support
-%bcond_without	mjpeg		# disable mjpegtools support
-%bcond_without	quicktime	# disable libquicktime support
-%bcond_without	sdl			# disable SDL support
-%bcond_with	jpegmmx		# jpeg-mmx
-%bcond_with	pvm3		# pvm3
+%bcond_without	magick		# ImageMagick module
+%bcond_without	libmpeg2	# libmpeg2 support
+%bcond_without	lzo		# LZO support
+%bcond_without	mjpeg		# mjpegtools support
+%bcond_without	quicktime	# libquicktime support
+%bcond_without	sdl		# SDL support
+%bcond_with	jpegmmx		# jpeg-mmx instead of plain libjpeg
+%bcond_with	pvm3		# PVM3 support
 
 # no jpeg-mmx there (doesn't compile)
 %ifnarch i586 i686 athlon
@@ -29,8 +29,8 @@ Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.1.7
 Release:	2
-License:	GPL
-Group:		Applications
+License:	GPL v2+
+Group:		Applications/Multimedia
 Source0:	https://bitbucket.org/france/transcode-tcforge/downloads/%{name}-%{version}.tar.bz2
 # Source0-md5:	9bb25a796a8591fb764de46ee87ce505
 Patch0:		%{name}-libx86_64.patch
@@ -42,16 +42,17 @@ Patch5:		%{name}-1.1.7-libav-9.patch
 Patch6:		%{name}-1.1.7-preset-force.patch
 Patch7:		%{name}-1.1.7-preset-free.patch
 URL:		https://bitbucket.org/france/transcode-tcforge/overview
-%{?with_im:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
-%{?with_sdl:BuildRequires:	SDL-devel >= 1.1.6}
+%{?with_magick:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
+%{?with_sdl:BuildRequires:	SDL-devel >= 1.2.5}
 BuildRequires:	a52dec-libs-devel
+BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.3
 BuildRequires:	faac-devel
 BuildRequires:	ffmpeg-devel >= 0.7.1
 BuildRequires:	freetype-devel >= 2.1.2
 %{?with_jpegmmx:BuildRequires:	jpeg-mmx}
-BuildRequires:	lame-libs-devel >= 3.89
+BuildRequires:	lame-libs-devel >= 3.93
 BuildRequires:	libdv-devel >= 0.104-3
 BuildRequires:	libdvdread-devel
 BuildRequires:	libfame-devel >= 0.9.1
@@ -60,23 +61,28 @@ BuildRequires:	libjpeg-devel
 %{?with_libmpeg2:BuildRequires:	libmpeg2-devel >= 0.4.0b}
 BuildRequires:	libogg-devel
 BuildRequires:	libpng-devel
-%{?with_quicktime:BuildRequires:	libquicktime-devel}
+%{?with_quicktime:BuildRequires:	libquicktime-devel >= 1.0.0}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	libv4l-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	libx264-devel
-BuildRequires:	libxml2-devel
+BuildRequires:	libxml2-devel >= 2.0
 %{?with_lzo:BuildRequires:	lzo-devel >= 2.0}
 %{?with_mjpeg:BuildRequires:	mjpegtools-devel}
 %ifarch %{ix86}
 BuildRequires:	nasm >= 0.98.34
 %endif
-BuildRequires:	pkgconfig
-%{?with_pvm3:BuildRequires:	pvm-devel}
+BuildRequires:	pkgconfig >= 1:0.20
+%{?with_pvm3:BuildRequires:	pvm-devel >= 3.4}
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXaw-devel
+BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXpm-devel
-BuildRequires:	xvid-devel
+BuildRequires:	xorg-lib-libXv-devel
+BuildRequires:	xvid-devel >= 1.0
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fomit-frame-pointer
@@ -175,33 +181,33 @@ Filtry transcode.
 	--enable-alsa \
 	--enable-faac \
 	--enable-freetype2 \
-	--enable-x264 \
 	--enable-iconv \
-	--%{!?with_im:dis}%{?with_im:en}able-imagemagick \
+	--enable-imagemagick%{!?with_magick:=no} \
 	--enable-lame \
 	--enable-libavcodec \
 	--enable-libdv \
 	--enable-libdvdread \
 	--enable-libjpeg \
-	--%{!?with_libmpeg2:dis}%{?with_libmpeg2:en}able-libmpeg2 \
+	--enable-libjpegmmx%{!?with_jpegmmx:=no} \
+	--enable-libmpeg2%{!?with_libmpeg2:=no} \
 	--enable-libmpeg2convert \
 	--enable-libpostproc \
-	--%{!?with_quicktime:dis}%{?with_quicktime:en}able-libquicktime \
+	--enable-libquicktime%{!?with_quicktime:=no} \
+	--enable-libv4l2 \
+	--enable-libv4lconvert \
 	--enable-libxml2 \
-	--%{!?with_lzo:dis}%{?with_lzo:en}able-lzo \
-	--with-lzo-includes=%{_includedir}/lzo \
-	--%{!?with_mjpeg:dis}%{?with_mjpeg:en}able-mjpegtools \
+	--enable-lzo%{!?with_lzo:=no} \
+	--enable-mjpegtools%{!?with_mjpeg:=no} \
 	--enable-ogg \
 	--enable-oss \
+	--enable-pvm3%{!?with_pvm3:=no} \
 	--enable-sdl \
 	--enable-statbuffer \
 	--enable-theora \
 	--enable-v4l \
-	--enable-libv4l2 \
-	--enable-libv4lconvert \
 	--enable-vorbis \
-	--%{!?with_jpegmmx:dis}%{?with_jpegmmx:en}able-libjpegmmx \
-	--%{!?with_pvm3:dis}%{?with_pvm3:en}able-pvm3 \
+	--enable-x264 \
+	--with-lzo-includes=%{_includedir}/lzo \
 	--with-x
 
 %{__make}
@@ -215,21 +221,56 @@ rm -rf $RPM_BUILD_ROOT
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
 
 # duplicate
-rm -rf $RPM_BUILD_ROOT%{_docdir}/transcode
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/transcode
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README ChangeLog docs/README* docs/*.txt docs/html
-%attr(755,root,root) %{_bindir}/*
+%doc AUTHORS ChangeLog README TODO docs/README.* docs/*.txt docs/html
+%attr(755,root,root) %{_bindir}/avifix
+%attr(755,root,root) %{_bindir}/aviindex
+%attr(755,root,root) %{_bindir}/avimerge
+%attr(755,root,root) %{_bindir}/avisplit
+%attr(755,root,root) %{_bindir}/avisync
+%attr(755,root,root) %{_bindir}/tccat
+%attr(755,root,root) %{_bindir}/tcdecode
+%attr(755,root,root) %{_bindir}/tcdemux
+%attr(755,root,root) %{_bindir}/tcextract
+%attr(755,root,root) %{_bindir}/tcmodinfo
+%attr(755,root,root) %{_bindir}/tcmp3cut
+%attr(755,root,root) %{_bindir}/tcprobe
+%attr(755,root,root) %{_bindir}/tcscan
+%attr(755,root,root) %{_bindir}/tcxmlcheck
+%attr(755,root,root) %{_bindir}/tcxpm2rgb
+%attr(755,root,root) %{_bindir}/tcyait
+%attr(755,root,root) %{_bindir}/transcode
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/a52_decore.so
 %{_libdir}/%{name}/a52_decore.la
-%{_libdir}/%{name}/a52_decore.so
 %{_libdir}/%{name}/parse_csv.awk
-%{_libdir}/%{name}/*.cfg
-%{_mandir}/man1/*
+%{_libdir}/%{name}/xvid4.cfg
+%{_mandir}/man1/avifix.1*
+%{_mandir}/man1/aviindex.1*
+%{_mandir}/man1/avimerge.1*
+%{_mandir}/man1/avisplit.1*
+%{_mandir}/man1/avisync.1*
+%{_mandir}/man1/tccat.1*
+%{_mandir}/man1/tcdecode.1*
+%{_mandir}/man1/tcdemux.1*
+%{_mandir}/man1/tcexport.1*
+%{_mandir}/man1/tcextract.1*
+%{_mandir}/man1/tcmodchain.1*
+%{_mandir}/man1/tcmodinfo.1*
+%{_mandir}/man1/tcprobe.1*
+%{_mandir}/man1/tcpvmexportd.1*
+%{_mandir}/man1/tcscan.1*
+%{_mandir}/man1/tcxmlcheck.1*
+%{_mandir}/man1/transcode.1*
+%{_mandir}/man1/transcode_export.1*
+%{_mandir}/man1/transcode_filter.1*
+%{_mandir}/man1/transcode_import.1*
 
 %files avilib
 %defattr(644,root,root,755)
@@ -238,16 +279,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files export
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/export*.la*
-%attr(755,root,root) %{_libdir}/%{name}/export*.so*
+%attr(755,root,root) %{_libdir}/%{name}/export*.so
+%{_libdir}/%{name}/export*.la
 
 %files import
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/import*.la*
-%attr(755,root,root) %{_libdir}/%{name}/import*.so*
+%attr(755,root,root) %{_libdir}/%{name}/import*.so
+%{_libdir}/%{name}/import*.la
 
 %files filter
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/filter*.la*
-%attr(755,root,root) %{_libdir}/%{name}/filter*.so*
+%attr(755,root,root) %{_libdir}/%{name}/filter*.so
+%{_libdir}/%{name}/filter*.la
 %attr(755,root,root) %{_libdir}/%{name}/filter*.awk
