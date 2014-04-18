@@ -220,6 +220,8 @@ rm -rf $RPM_BUILD_ROOT
 
 install -D avilib/avilib.h $RPM_BUILD_ROOT%{_includedir}/avilib.h
 
+# dlopened modules
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
 # duplicate
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/transcode
 
@@ -248,8 +250,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/transcode
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/a52_decore.so
-%{_libdir}/%{name}/a52_decore.la
-%{_libdir}/%{name}/parse_csv.awk
 %{_libdir}/%{name}/xvid4.cfg
 %{_mandir}/man1/avifix.1*
 %{_mandir}/man1/aviindex.1*
@@ -279,16 +279,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files export
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/export*.so
-%{_libdir}/%{name}/export*.la
+%attr(755,root,root) %{_libdir}/%{name}/export_*.so
 
 %files import
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/import*.so
-%{_libdir}/%{name}/import*.la
+%attr(755,root,root) %{_libdir}/%{name}/import_*.so
 
 %files filter
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/filter*.so
-%{_libdir}/%{name}/filter*.la
-%attr(755,root,root) %{_libdir}/%{name}/filter*.awk
+%attr(755,root,root) %{_libdir}/%{name}/filter_*.so
+%attr(755,root,root) %{_libdir}/%{name}/filter_list.awk
+%attr(755,root,root) %{_libdir}/%{name}/parse_csv.awk
