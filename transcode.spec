@@ -1,6 +1,4 @@
 # TODO:
-# - disable building of libraries which exist in system (libdv?,libmpeg2 etc.)
-# - cmov test is broken, ignores --enable-cmov-extension and tries to read /proc/cpuinfo
 # - pvm3 needs recompiled with -fPIC, then it can be used here
 # - --enable-ibp requires some libs from http://loci.cs.utk.edu/ [libfdr libibp libexnode liblbone libend2end libmd5 libdes libaes liblors]
 # - rm Makefiles from htmldir
