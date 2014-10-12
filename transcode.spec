@@ -39,6 +39,7 @@ Patch4:		%{name}-1.1.7-ffmpeg.patch
 Patch5:		%{name}-1.1.7-libav-9.patch
 Patch6:		%{name}-1.1.7-preset-force.patch
 Patch7:		%{name}-1.1.7-preset-free.patch
+Patch8:		%{name}-1.1.7-ffmpeg-2.4.patch
 URL:		https://bitbucket.org/france/transcode-tcforge/overview
 %{?with_magick:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.5}
@@ -151,6 +152,7 @@ Filtry transcode.
 %patch5 -p0
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %{__libtoolize}
