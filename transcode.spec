@@ -26,7 +26,7 @@ Summary:	Video stream converter
 Summary(pl.UTF-8):	Konwerter strumieni video
 Name:		transcode
 Version:	1.1.7
-Release:	5
+Release:	6
 License:	GPL v2+
 Group:		Applications/Multimedia
 Source0:	https://bitbucket.org/france/transcode-tcforge/downloads/%{name}-%{version}.tar.bz2
@@ -40,6 +40,7 @@ Patch5:		%{name}-1.1.7-libav-9.patch
 Patch6:		%{name}-1.1.7-preset-force.patch
 Patch7:		%{name}-1.1.7-preset-free.patch
 Patch8:		%{name}-1.1.7-ffmpeg-2.4.patch
+Patch9:		ffmpeg3.patch
 URL:		https://bitbucket.org/france/transcode-tcforge/overview
 %{?with_magick:BuildRequires:	ImageMagick-devel >= 6.4.1-2}
 %{?with_sdl:BuildRequires:	SDL-devel >= 1.2.5}
@@ -153,6 +154,7 @@ Filtry transcode.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %{__libtoolize}
