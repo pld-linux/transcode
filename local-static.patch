@@ -1,0 +1,37 @@
+--- transcode-1.1.7/import/extract_ac3.c~	2011-11-19 17:50:27.000000000 +0100
++++ transcode-1.1.7/import/extract_ac3.c	2021-02-14 18:57:28.911216181 +0100
+@@ -331,10 +331,10 @@
+ 
+ 
+ 
+-FILE *fd;
++static FILE *fd;
+ 
+ #define MAX_BUF 4096
+-char audio[MAX_BUF];
++static char audio[MAX_BUF];
+ 
+ 
+ /* from ac3scan.c */
+--- transcode-1.1.7/import/extract_mp3.c~	2011-11-19 17:50:27.000000000 +0100
++++ transcode-1.1.7/import/extract_mp3.c	2021-02-14 18:57:58.834747274 +0100
+@@ -243,7 +243,7 @@
+ }
+ 
+ #define MAX_BUF 4096
+-char audio[MAX_BUF];
++static char audio[MAX_BUF];
+ 
+ /* ------------------------------------------------------------
+  *
+--- transcode-1.1.7/import/extract_pcm.c~	2011-11-19 17:50:27.000000000 +0100
++++ transcode-1.1.7/import/extract_pcm.c	2021-02-14 18:58:28.858280225 +0100
+@@ -33,7 +33,7 @@
+ #include "tc.h"
+ 
+ #define MAX_BUF 4096
+-char audio[MAX_BUF];
++static char audio[MAX_BUF];
+ 
+ #define BUFFER_SIZE 262144
+ static uint8_t buffer[BUFFER_SIZE];
